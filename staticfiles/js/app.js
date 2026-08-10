@@ -699,10 +699,9 @@ window.quickAutoCreateAccount = function() {
 // --- Authentication & Session Memory Management ---
 function initAuthManager() {
     const activeUser = {
-        username: 'kishanhp18',
-        email: 'kishanhp18@gmail.com',
-        first_name: 'Kishan HP',
-        role: 'ADMIN'
+        username: 'farmer',
+        first_name: 'Farmer',
+        role: 'FARMER'
     };
     localStorage.setItem('agriguard_user', JSON.stringify(activeUser));
     renderUserSession(activeUser);
