@@ -17,9 +17,12 @@
     <!-- Glassmorphic Header Navigation -->
     <nav class="glass-nav">
         <div class="container navbar">
-            <a href="#" class="logo" onclick="switchTab('home-tab'); return false;">
-                🌿 AgriGuard <span>AI</span>
-            </a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="hamburger-btn" id="openDrawerBtn" onclick="openSideDrawer()" title="Open Smart Tools Drawer" style="margin-right: 2px;">☰</button>
+                <a href="#" class="logo" onclick="switchTab('home-tab'); return false;">
+                    🌿 AgriGuard <span>AI</span>
+                </a>
+            </div>
 
             <ul class="nav-links">
                 <li><a class="nav-link active" data-tab="home-tab" data-i18n="navHome">🌾 Farmer Portal</a></li>
@@ -43,7 +46,6 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="switchTab('scanner-tab')" data-i18n="detectBtn">Detect Crop Disease</button>
-                <button class="hamburger-btn" id="openDrawerBtn" onclick="openSideDrawer()" title="Open Smart Tools Drawer">☰</button>
             </div>
         </div>
     </nav>
