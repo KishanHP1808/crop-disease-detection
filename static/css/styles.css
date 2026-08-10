@@ -847,6 +847,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.25s ease;
     padding: 0;
     box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+    z-index: 10;
 }
 
 .hamburger-btn:hover {
@@ -866,12 +867,14 @@ h1, h2, h3, h4, h5, h6 {
     backdrop-filter: blur(8px);
     z-index: 10006;
     opacity: 0;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .drawer-backdrop.active {
-    display: block;
-    opacity: 1;
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 .side-drawer {
@@ -889,14 +892,18 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
     z-index: 10007;
     transform: translateX(-100%);
-    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), visibility 0.35s ease;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
 
 .side-drawer.active {
-    transform: translateX(0);
+    transform: translateX(0) !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 .drawer-header {

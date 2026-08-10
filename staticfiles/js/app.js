@@ -699,9 +699,10 @@ window.quickAutoCreateAccount = function() {
 // --- Authentication & Session Memory Management ---
 function initAuthManager() {
     const activeUser = {
-        username: 'farmer',
-        first_name: 'Farmer',
-        role: 'FARMER'
+        username: 'kishanhp18',
+        email: 'kishanhp18@gmail.com',
+        first_name: 'Kishan HP',
+        role: 'ADMIN'
     };
     localStorage.setItem('agriguard_user', JSON.stringify(activeUser));
     renderUserSession(activeUser);
@@ -955,17 +956,40 @@ function initNavigation() {
     });
 }
 
+// --- Slide-Out Side Drawer (3 Bar Lines Menu) Engine ---
+function openSideDrawer() {
+    const drawer = document.getElementById('sideDrawer');
+    const backdrop = document.getElementById('drawerBackdrop');
+    if (drawer) drawer.classList.add('active');
+    if (backdrop) backdrop.classList.add('active');
+}
+
+function closeSideDrawer() {
+    const drawer = document.getElementById('sideDrawer');
+    const backdrop = document.getElementById('drawerBackdrop');
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
+}
+
+function switchDrawerTab(tabId) {
+    switchTab(tabId);
+    closeSideDrawer();
+}
+
 function switchTab(tabId) {
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     document.querySelectorAll('.mobile-nav-item').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.drawer-item').forEach(d => d.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
     const activeLink = document.querySelector(`.nav-link[data-tab="${tabId}"]`);
     const activeMobileItem = document.querySelector(`.mobile-nav-item[data-tab="${tabId}"]`);
+    const activeDrawerItem = document.querySelector(`.drawer-item[data-tab="${tabId}"]`);
     const activeTab = document.getElementById(tabId);
 
     if (activeLink) activeLink.classList.add('active');
     if (activeMobileItem) activeMobileItem.classList.add('active');
+    if (activeDrawerItem) activeDrawerItem.classList.add('active');
     if (activeTab) {
         activeTab.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
