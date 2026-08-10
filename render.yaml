@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: crop-disease-detection
+    env: python
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate"
+    startCommand: "gunicorn agriguard_backend.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
