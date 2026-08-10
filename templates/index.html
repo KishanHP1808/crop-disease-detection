@@ -23,14 +23,7 @@
 
             <ul class="nav-links">
                 <li><a class="nav-link active" data-tab="home-tab" data-i18n="navHome">🌾 Farmer Portal</a></li>
-                <li><a class="nav-link" data-tab="scanner-tab" data-i18n="navScan">AI Detection</a></li>
-                <li><a class="nav-link" data-tab="dashboard-tab" data-i18n="navDashboard">Dashboard</a></li>
-                <li><a class="nav-link" data-tab="soil-tab" data-i18n="navSoil">Soil Health</a></li>
-                <li><a class="nav-link" data-tab="weather-tab" data-i18n="navWeather">Weather</a></li>
-                <li><a class="nav-link" data-tab="market-tab" data-i18n="navMarket">Market Prices</a></li>
-                <li><a class="nav-link" data-tab="schemes-tab" data-i18n="navSchemes">Schemes</a></li>
-                <li><a class="nav-link" data-tab="expert-tab" data-i18n="navExperts">Experts</a></li>
-                <li><a class="nav-link" data-tab="map-tab" data-i18n="navMap">Stores Map</a></li>
+                <li><a class="nav-link" data-tab="scanner-tab" data-i18n="navScan">📷 AI Detection</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -50,8 +43,65 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="switchTab('scanner-tab')" data-i18n="detectBtn">Detect Crop Disease</button>
+                <button class="hamburger-btn" id="openDrawerBtn" onclick="openSideDrawer()" title="Open Smart Tools Drawer">☰</button>
             </div>
+        </div>
     </nav>
+
+    <!-- Slide-Out Side Drawer Backdrop & Panel (3 Bar Lines Menu) -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeSideDrawer()"></div>
+    <div class="side-drawer" id="sideDrawer">
+        <div class="drawer-header">
+            <div class="drawer-title">
+                <span>🍀 Smart Tools Drawer</span>
+            </div>
+            <button class="drawer-close-btn" onclick="closeSideDrawer()" title="Close Drawer">✕</button>
+        </div>
+        <ul class="drawer-menu">
+            <li>
+                <a class="drawer-item" data-tab="dashboard-tab" onclick="switchDrawerTab('dashboard-tab')">
+                    <span class="drawer-item-icon">📊</span>
+                    <span data-i18n="navDashboard">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="drawer-item" data-tab="soil-tab" onclick="switchDrawerTab('soil-tab')">
+                    <span class="drawer-item-icon">🧪</span>
+                    <span data-i18n="navSoil">Soil Health</span>
+                </a>
+            </li>
+            <li>
+                <a class="drawer-item" data-tab="weather-tab" onclick="switchDrawerTab('weather-tab')">
+                    <span class="drawer-item-icon">🌦️</span>
+                    <span data-i18n="navWeather">Weather</span>
+                </a>
+            </li>
+            <li>
+                <a class="drawer-item" data-tab="market-tab" onclick="switchDrawerTab('market-tab')">
+                    <span class="drawer-item-icon">📈</span>
+                    <span data-i18n="navMarket">Market Prices</span>
+                </a>
+            </li>
+            <li>
+                <a class="drawer-item" data-tab="schemes-tab" onclick="switchDrawerTab('schemes-tab')">
+                    <span class="drawer-item-icon">📜</span>
+                    <span data-i18n="navSchemes">Government Schemes</span>
+                </a>
+            </li>
+            <li>
+                <a class="drawer-item" data-tab="expert-tab" onclick="switchDrawerTab('expert-tab')">
+                    <span class="drawer-item-icon">👨‍🌾</span>
+                    <span data-i18n="navExperts">Agri Experts</span>
+                </a>
+            </li>
+            <li>
+                <a class="drawer-item" data-tab="map-tab" onclick="switchDrawerTab('map-tab')">
+                    <span class="drawer-item-icon">🗺️</span>
+                    <span data-i18n="navMap">Stores & Labs Map</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <!-- Entrance Live GPS Location & Environment Banner -->
     <div id="entranceLocationBanner" style="background: linear-gradient(90deg, #1b5e20, #2E7D32); color: white; padding: 10px 20px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(0,0,0,0.12); position: sticky; top: 70px; z-index: 999;">
