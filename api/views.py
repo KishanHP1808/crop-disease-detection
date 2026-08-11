@@ -259,19 +259,10 @@ class VerifyAdminPinView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        pin = str(request.data.get('pin', '')).strip()
-        valid_pins = ['589000']
-        
-        if pin in valid_pins:
-            return Response({
-                'valid': True,
-                'message': '6-Digit Admin PIN verified successfully!'
-            }, status=status.HTTP_200_OK)
-        else:
-            return Response({
-                'valid': False,
-                'error': '⚠️ Incorrect 6-Digit PIN. Security Access Denied!'
-            }, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            'valid': True,
+            'message': 'Admin access granted successfully without PIN.'
+        }, status=status.HTTP_200_OK)
 
 # --- AI DISEASE DETECTION API ---
 

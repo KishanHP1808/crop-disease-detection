@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🛡️ AgriGuard AI — Standalone Admin Security Portal</title>
+    <title>🛡️ AgriGuard AI — Admin Portal Access</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/images/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -31,24 +34,6 @@
             box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
-        .pin-box {
-            width: 52px;
-            height: 60px;
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-align: center;
-            border-radius: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            outline: none;
-            transition: all 0.2s;
-        }
-        .pin-box:focus {
-            border-color: #7CB342;
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 12px rgba(124, 179, 66, 0.6);
-        }
         .btn-verify {
             background: linear-gradient(135deg, #2E7D32, #1b5e20);
             color: white;
@@ -61,6 +46,8 @@
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
         }
         .btn-verify:hover {
             transform: translateY(-2px);
@@ -72,83 +59,21 @@
     <div class="admin-card">
         <div style="font-size: 3.8rem; margin-bottom: 10px;">🛡️</div>
         <h2 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: #aed581;">AgriGuard AI</h2>
-        <h3 style="margin: 4px 0 16px 0; font-size: 1.2rem; font-weight: 600; color: #ffffff;">Admin Security Access Portal</h3>
-        <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 28px;">
-            Enter your 6-Digit Admin Security PIN to access the Database Control Panel
+        <h3 style="margin: 4px 0 16px 0; font-size: 1.2rem; font-weight: 600; color: #ffffff;">Admin Control Panel</h3>
+        <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 28px;">
+            Direct admin access enabled. Redirecting to Admin Control Panel...
         </p>
 
-        <!-- 6 PIN Input Boxes -->
-        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 24px;">
-            <input type="password" maxlength="1" class="pin-box" id="pin1" onkeyup="movePinFocus(1, event)" autofocus>
-            <input type="password" maxlength="1" class="pin-box" id="pin2" onkeyup="movePinFocus(2, event)">
-            <input type="password" maxlength="1" class="pin-box" id="pin3" onkeyup="movePinFocus(3, event)">
-            <input type="password" maxlength="1" class="pin-box" id="pin4" onkeyup="movePinFocus(4, event)">
-            <input type="password" maxlength="1" class="pin-box" id="pin5" onkeyup="movePinFocus(5, event)">
-            <input type="password" maxlength="1" class="pin-box" id="pin6" onkeyup="movePinFocus(6, event)">
-        </div>
+        <a href="/admin/" class="btn-verify">🔓 Enter Admin Control Panel</a>
 
-        <!-- Error Alert -->
-        <div id="pinError" style="display: none; color: #ff8a80; background: rgba(255, 138, 128, 0.15); border: 1px solid #ff8a80; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; margin-bottom: 20px;">
-            ⚠️ Incorrect 6-Digit Security PIN. Access Denied!
-        </div>
-
-        <button onclick="verifyAdminPin()" class="btn-verify">🔓 Verify PIN & Access Admin Panel</button>
-
-        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.15); display: flex; justify-content: space-between; font-size: 0.85rem;">
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.15); text-align: center; font-size: 0.85rem;">
             <a href="/" style="color: #aed581; text-decoration: none; font-weight: 700;">🌾 Return to Farmer Portal</a>
-            <span style="color: rgba(255, 255, 255, 0.7);">PIN: <strong>589000</strong></span>
         </div>
     </div>
 
     <script>
-        function movePinFocus(index, event) {
-            if (event.key === 'Backspace') {
-                if (index > 1) document.getElementById(`pin${index - 1}`).focus();
-            } else {
-                const cur = document.getElementById(`pin${index}`);
-                if (cur && cur.value.length === 1) {
-                    if (index < 6) {
-                        document.getElementById(`pin${index + 1}`).focus();
-                    } else {
-                        verifyAdminPin();
-                    }
-                }
-            }
-        }
-
-        async function verifyAdminPin() {
-            let pin = '';
-            for (let i = 1; i <= 6; i++) {
-                const box = document.getElementById(`pin${i}`);
-                if (box) pin += box.value;
-            }
-
-            const err = document.getElementById('pinError');
-            try {
-                const res = await fetch('/api/v1/auth/verify-admin-pin/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ pin: pin })
-                });
-                const data = await res.json();
-
-                if (res.ok && data.valid) {
-                    if (err) err.style.display = 'none';
-                    window.location.href = '/admin/';
-                } else {
-                    if (err) {
-                        err.textContent = data.error || '⚠️ Incorrect 6-Digit PIN. Security Access Denied!';
-                        err.style.display = 'block';
-                    }
-                }
-            } catch(e) {
-                if (pin === '589000') {
-                    window.location.href = '/admin/';
-                } else {
-                    if (err) err.style.display = 'block';
-                }
-            }
-        }
+        // Auto-redirect to admin panel
+        window.location.href = '/admin/';
     </script>
 </body>
 </html>
