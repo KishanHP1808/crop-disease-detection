@@ -2778,3 +2778,220 @@ function quickSelectScannerCrop(cropName) {
 document.addEventListener('DOMContentLoaded', () => {
     initCardStack();
 });
+
+// =========================================================================
+// EMERGENCY RED ZONE ALARM & SIREN ADVISORY ENGINE
+// =========================================================================
+let redzoneAlarmInterval = null;
+let sirenAudioCtx = null;
+let sirenOsc1 = null;
+let sirenOsc2 = null;
+let sirenActive = false;
+
+function initRedzoneAlarmSystem() {
+    const alarmToggle = document.getElementById('redzoneAlarmToggle');
+    const testBtn = document.getElementById('testRedzoneAlarmBtn');
+
+    if (alarmToggle) {
+        // Load saved state
+        const savedAlarm = localStorage.getItem('agri_redzone_alarm_enabled') === 'true';
+        alarmToggle.checked = savedAlarm;
+        if (savedAlarm) {
+            startRedzoneAlarmMonitoring();
+        }
+
+        alarmToggle.addEventListener('change', (e) => {
+            const enabled = e.target.checked;
+            localStorage.setItem('agri_redzone_alarm_enabled', enabled ? 'true' : 'false');
+            if (enabled) {
+                // Request notification permission
+                if (window.Notification && Notification.permission !== 'granted') {
+                    Notification.requestPermission().then(perm => {
+                        if (perm === 'granted') {
+                            showToast('✅ Notification access granted for Emergency Alerts!');
+                        } else {
+                            showToast('⚠️ Alert notifications will not display. Permission denied.');
+                        }
+                    });
+                }
+                startRedzoneAlarmMonitoring();
+                showToast('🚨 Red Zone Alarm Guard ACTIVATED. Scanning every 1 hour.');
+            } else {
+                stopRedzoneAlarmMonitoring();
+                stopSirenAlarm();
+                showToast('🔕 Red Zone Alarm Guard DEACTIVATED.');
+            }
+        });
+    }
+
+    if (testBtn) {
+        testBtn.addEventListener('click', () => {
+            triggerRedzoneAlarmTest();
+        });
+    }
+
+    // Run initial status check based on current coordinates
+    checkRedzoneStatus(false);
+}
+
+async function checkRedzoneStatus(triggerAlerts = true) {
+    const lat = localStorage.getItem('agriguard_lat') || '12.9716';
+    const lng = localStorage.getItem('agriguard_lng') || '77.5946';
+    const locName = localStorage.getItem('agriguard_location_name') || 'Mysuru';
+
+    try {
+        const res = await fetch(`/api/v1/redzone-status/?lat=${lat}&lng=${lng}&location=${encodeURIComponent(locName)}`);
+        const data = await res.json();
+        
+        updateRedzoneUI(data.is_red_zone, data.reasons.join(' | '));
+
+        if (data.is_red_zone && triggerAlerts) {
+            triggerAlertAudioAndPush(data.reasons[0], data.advisory);
+        }
+    } catch (e) {
+        console.error('Failed to fetch Red Zone alert status:', e);
+    }
+}
+
+function updateRedzoneUI(isRedZone, reasonText) {
+    const dot = document.getElementById('redzoneStatusDot');
+    const text = document.getElementById('redzoneStatusText');
+    const badge = document.getElementById('redzoneAlertBadgeBox');
+    const indicator = document.getElementById('redzoneStatusIndicator');
+
+    if (isRedZone) {
+        if (dot) dot.textContent = '🔴';
+        if (text) text.innerHTML = `<strong>EMERGENCY RED ZONE ALERT:</strong> ${reasonText}`;
+        if (badge) {
+            badge.style.background = 'rgba(211,47,47,0.1)';
+            badge.style.color = '#c62828';
+            badge.style.borderColor = 'rgba(211,47,47,0.2)';
+        }
+        if (indicator) {
+            indicator.style.backgroundColor = '#d32f2f';
+            indicator.style.boxShadow = '0 0 10px #d32f2f';
+            indicator.classList.add('hazard-blink');
+        }
+    } else {
+        if (dot) dot.textContent = '🟢';
+        if (text) text.textContent = 'Area is Safe & Clear';
+        if (badge) {
+            badge.style.background = 'rgba(46,125,50,0.1)';
+            badge.style.color = '#2e7d32';
+            badge.style.borderColor = 'rgba(46,125,50,0.2)';
+        }
+        if (indicator) {
+            indicator.style.backgroundColor = '#2e7d32';
+            indicator.style.boxShadow = '0 0 10px #2e7d32';
+            indicator.classList.remove('hazard-blink');
+        }
+    }
+}
+
+function startRedzoneAlarmMonitoring() {
+    if (redzoneAlarmInterval) clearInterval(redzoneAlarmInterval);
+    // Check status every 1 hour (3600000ms)
+    redzoneAlarmInterval = setInterval(() => {
+        checkRedzoneStatus(true);
+    }, 3600000);
+}
+
+function stopRedzoneAlarmMonitoring() {
+    if (redzoneAlarmInterval) {
+        clearInterval(redzoneAlarmInterval);
+        redzoneAlarmInterval = null;
+    }
+}
+
+function playSirenAlarm(durationMs = 10000) {
+    if (sirenActive) return;
+    try {
+        sirenActive = true;
+        sirenAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        sirenOsc1 = sirenAudioCtx.createOscillator();
+        sirenOsc2 = sirenAudioCtx.createOscillator();
+        const gainNode = sirenAudioCtx.createGain();
+        const lfoGain = sirenAudioCtx.createGain();
+        
+        sirenOsc1.type = 'sawtooth';
+        sirenOsc1.frequency.setValueAtTime(800, sirenAudioCtx.currentTime);
+        
+        sirenOsc2.type = 'sine';
+        sirenOsc2.frequency.setValueAtTime(2.5, sirenAudioCtx.currentTime); // 2.5Hz modulation
+        
+        lfoGain.gain.setValueAtTime(180, sirenAudioCtx.currentTime); // Siren range
+        
+        sirenOsc2.connect(lfoGain);
+        lfoGain.connect(sirenOsc1.frequency);
+        
+        gainNode.gain.setValueAtTime(0.25, sirenAudioCtx.currentTime);
+        sirenOsc1.connect(gainNode);
+        gainNode.connect(sirenAudioCtx.destination);
+        
+        sirenOsc1.start();
+        sirenOsc2.start();
+
+        // Auto stop after duration
+        setTimeout(() => {
+            stopSirenAlarm();
+        }, durationMs);
+    } catch (e) {
+        console.warn('AudioContext failed:', e);
+        sirenActive = false;
+    }
+}
+
+function stopSirenAlarm() {
+    if (sirenOsc1) {
+        try { sirenOsc1.stop(); } catch(e) {}
+        sirenOsc1 = null;
+    }
+    if (sirenOsc2) {
+        try { sirenOsc2.stop(); } catch(e) {}
+        sirenOsc2 = null;
+    }
+    if (sirenAudioCtx) {
+        try { sirenAudioCtx.close(); } catch(e) {}
+        sirenAudioCtx = null;
+    }
+    sirenActive = false;
+}
+
+function triggerRedzoneAlarmTest() {
+    showToast('🚨 Initiating Red Zone Alert System Test...');
+    // Play sound siren for 6 seconds
+    playSirenAlarm(6000);
+
+    // Push local browser notification
+    if (window.Notification && Notification.permission === 'granted') {
+        new Notification('🚨 RED ZONE ALERT: AgriGuard Emergency Alert', {
+            body: '⚠️ [TEST ALARM] Extreme weather/calamity detected at your GPS coordinates. Evacuate or seek immediate shelter.',
+            icon: '/static/images/icon-192.png'
+        });
+    }
+
+    // Force updates to UI for demonstration
+    updateRedzoneUI(true, 'ACTIVE SIREN TEST ALERT: Extreme Rain, Storm, and Natural Calamity Alert!');
+    
+    setTimeout(() => {
+        // Reset UI status to real GPS status after test
+        checkRedzoneStatus(false);
+    }, 8000);
+}
+
+function triggerAlertAudioAndPush(reason, advisory) {
+    playSirenAlarm(12000); // 12 seconds siren
+    if (window.Notification && Notification.permission === 'granted') {
+        new Notification('🚨 RED ZONE ADVISORY', {
+            body: `Alert: ${reason}. Advisory: ${advisory}`,
+            icon: '/static/images/icon-192.png',
+            requireInteraction: true
+        });
+    }
+}
+
+// Hook into DOM Load
+document.addEventListener('DOMContentLoaded', () => {
+    initRedzoneAlarmSystem();
+});

@@ -1611,4 +1611,52 @@ select.form-control {
     }
 }
 
+/* Emergency Red Zone Alarm Styles */
+.hazard-blink {
+    animation: hazard-pulse-anim 1.5s infinite alternate;
+}
+@keyframes hazard-pulse-anim {
+    0% { opacity: 0.3; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 14px #d32f2f; }
+}
+
+/* Custom Switch Toggle */
+.alarm-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+.alarm-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.alarm-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #ccc;
+    transition: .3s;
+    border-radius: 24px;
+}
+.alarm-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.alarm-switch input:checked + .alarm-slider {
+    background-color: #d32f2f;
+}
+.alarm-switch input:checked + .alarm-slider:before {
+    transform: translateX(24px);
+}
+
 

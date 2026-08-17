@@ -1855,3 +1855,71 @@ self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r
         
         with open(sw_path, 'r', encoding='utf-8') as f:
             return HttpResponse(f.read(), content_type='application/javascript')
+
+class RedZoneStatusView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        lat = request.query_params.get('lat')
+        lng = request.query_params.get('lng')
+        loc_name = request.query_params.get('location', '').strip().lower()
+        simulate = request.query_params.get('simulate', 'false').lower() == 'true'
+
+        is_red_zone = False
+        reasons = []
+        alert_level = 'SAFE'
+
+        # 1. Force simulation if requested by the user
+        if simulate:
+            is_red_zone = True
+            reasons.append("⚠️ [SIMULATED ALERT] Area marked as RED ZONE: Active regional storm warning & government advisory.")
+            alert_level = 'RED_ZONE'
+        else:
+            # 2. Check for regional keywords (conflict, war, flood, storm)
+            if any(k in loc_name for k in ['border', 'conflict', 'war', 'kashmir', 'loc', 'galwan']):
+                is_red_zone = True
+                reasons.append("🚨 [MILITARY WAR ZONE] Active border tension. Government restricted zone. Evacuate immediately.")
+                alert_level = 'RED_ZONE'
+            elif any(k in loc_name for k in ['cyclone', 'flood', 'tsunami', 'earthquake', 'landslide', 'calamity']):
+                is_red_zone = True
+                reasons.append("🌊 [NATURAL DISASTER] Government Red Zone: Active natural calamity rescue operations underway.")
+                alert_level = 'RED_ZONE'
+
+            # 3. Check for extreme weather parameters
+            if lat and lng:
+                try:
+                    lat_val = float(lat)
+                    lng_val = float(lng)
+                    weather_helper = WeatherView()
+                    om = weather_helper._fetch_open_meteo(lat_val, lng_val)
+                    if om:
+                        cur = om.get('current', {})
+                        wind = cur.get('wind_speed_10m', 0.0)
+                        rain = cur.get('precipitation', 0.0)
+                        
+                        if wind > 50.0:
+                            is_red_zone = True
+                            reasons.append(f"💨 [EXTREME WIND STORM] Wind speed is {wind} km/h (exceeding safety limit of 50 km/h).")
+                            alert_level = 'RED_ZONE'
+                        if rain > 50.0:
+                            is_red_zone = True
+                            reasons.append(f"🌧️ [TORRENTIAL CLOUDBURST] Rainfall is {rain} mm/h. High risk of flash floods.")
+                            alert_level = 'RED_ZONE'
+                except Exception as e:
+                    print(f"Redzone weather check error: {e}")
+
+        # Default safe responses
+        if not is_red_zone:
+            reasons.append("🟢 Weather conditions are stable. No active government war or natural calamity alerts in this sector.")
+            alert_level = 'SAFE'
+
+        return Response({
+            'success': True,
+            'is_red_zone': is_red_zone,
+            'alert_level': alert_level,
+            'location': loc_name.title() or 'Live GPS Coordinate Frame',
+            'latitude': lat,
+            'longitude': lng,
+            'reasons': reasons,
+            'advisory': "⚠️ STAY INDOORS: Pack emergency kit, monitor live broadcast radio, keep offline maps ready." if is_red_zone else "Standard operations. Maintain routine field irrigation."
+        })

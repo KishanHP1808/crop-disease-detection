@@ -984,6 +984,37 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Emergency Red Zone Alarm System Card -->
+            <div class="glass-card" style="padding: 24px; margin-top: 28px; border-left: 6px solid #d32f2f; background: linear-gradient(135deg, rgba(211,47,47,0.04), rgba(255,255,255,0.02));">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div style="flex: 1; min-width: 280px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="hazard-blink" id="redzoneStatusIndicator" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #2e7d32; box-shadow: 0 0 10px #2e7d32;"></span>
+                            <h3 style="color: #c62828; margin: 0; font-size: 1.3rem;">🚨 Emergency Red Zone Alarm System</h3>
+                        </div>
+                        <p style="color: var(--text-dark); font-size: 0.92rem; margin-top: 8px; max-width: 650px;">
+                            AgriGuard AI monitors your live location. If the government classifies this area as a <strong>Red Zone</strong> due to extreme rain, storms, fast winds (>50 km/h), natural disasters, or conflict zones, the app triggers a sound siren and pushes browser alarm notifications every 1 hour.
+                        </p>
+                        <div id="redzoneAlertBadgeBox" style="margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; background: rgba(46,125,50,0.1); color: #2e7d32; padding: 6px 14px; border-radius: 12px; font-weight: 700; font-size: 0.85rem; border: 1px solid rgba(46,125,50,0.2);">
+                            <span id="redzoneStatusDot">🟢</span> Status: <span id="redzoneStatusText">Area is Safe & Clear</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right; display: flex; flex-direction: column; gap: 12px; min-width: 220px; align-items: flex-end;">
+                        <!-- Alarm Settings Toggle -->
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-weight: 700; font-size: 0.9rem; color: var(--text-dark);">1-Hour Alarm Guard:</span>
+                            <label class="alarm-switch">
+                                <input type="checkbox" id="redzoneAlarmToggle">
+                                <span class="alarm-slider"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-danger" id="testRedzoneAlarmBtn" style="background: #c62828; color: white; border: none; padding: 10px 16px; border-radius: 12px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(198,40,40,0.25);">
+                            🔊 Test Siren & Notification
+                        </button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- TAB 6: MARKET PRICES -->

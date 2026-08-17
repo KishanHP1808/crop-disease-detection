@@ -7,7 +7,7 @@ from .views import (
     WeatherView, WeatherSuitabilityView, MarketPriceViewSet, GovernmentSchemeViewSet, BookmarkSchemeView,
     SoilHealthView, ExpertViewSet, AppointmentViewSet, AgriShopViewSet,
     FarmRecordViewSet, ChatbotView, AnalyticsSummaryView,
-    ApkDownloadView, ServiceWorkerView
+    ApkDownloadView, ServiceWorkerView, RedZoneStatusView
 )
 
 router = DefaultRouter()
@@ -38,6 +38,7 @@ urlpatterns = [
     path('chatbot/', ChatbotView.as_view(), name='chatbot'),
     path('analytics/', AnalyticsSummaryView.as_view(), name='analytics_summary'),
     path('download/apk/', ApkDownloadView.as_view(), name='apk_download'),
+    path('redzone-status/', RedZoneStatusView.as_view(), name='redzone_status'),
 
     path('', include(router.urls)),
 ]
