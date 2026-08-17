@@ -6,7 +6,8 @@ from .views import (
     CropViewSet, DiseaseViewSet, FarmViewSet, FieldViewSet,
     WeatherView, WeatherSuitabilityView, MarketPriceViewSet, GovernmentSchemeViewSet, BookmarkSchemeView,
     SoilHealthView, ExpertViewSet, AppointmentViewSet, AgriShopViewSet,
-    FarmRecordViewSet, ChatbotView, AnalyticsSummaryView
+    FarmRecordViewSet, ChatbotView, AnalyticsSummaryView,
+    ApkDownloadView, ServiceWorkerView
 )
 
 router = DefaultRouter()
@@ -36,6 +37,7 @@ urlpatterns = [
     path('schemes/<int:scheme_id>/bookmark/', BookmarkSchemeView.as_view(), name='scheme_bookmark'),
     path('chatbot/', ChatbotView.as_view(), name='chatbot'),
     path('analytics/', AnalyticsSummaryView.as_view(), name='analytics_summary'),
+    path('download/apk/', ApkDownloadView.as_view(), name='apk_download'),
 
     path('', include(router.urls)),
 ]

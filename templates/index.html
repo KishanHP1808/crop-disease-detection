@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriGuard AI – Intelligent Crop Disease Detection & Smart Farming Platform</title>
-    <meta name="description" content="AI-powered crop disease detection, soil diagnostics, real-time weather alerts, market prices, and government scheme aggregator for farmers.">
+    <meta name="description"
+        content="AI-powered crop disease detection, soil diagnostics, real-time weather alerts, market prices, and government scheme aggregator for farmers.">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon.ico">
@@ -16,15 +18,19 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
+
 <body>
 
     <!-- Glassmorphic Header Navigation -->
     <nav class="glass-nav">
         <div class="container navbar">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <button class="hamburger-btn" id="openDrawerBtn" onclick="openSideDrawer()" title="Open Smart Tools Drawer" style="margin-right: 2px;">☰</button>
-                <a href="#" class="logo" onclick="switchTab('home-tab'); return false;" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <img src="/static/images/icon-192.png" alt="AgriGuard Profile Logo" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border: 1.5px solid #7CB342;">
+                <button class="hamburger-btn" id="openDrawerBtn" onclick="openSideDrawer()"
+                    title="Open Smart Tools Drawer" style="margin-right: 2px;">☰</button>
+                <a href="#" class="logo" onclick="switchTab('home-tab'); return false;"
+                    style="display: inline-flex; align-items: center; gap: 8px;">
+                    <img src="/static/images/icon-192.png" alt="AgriGuard Profile Logo"
+                        style="width:30px; height:30px; border-radius:50%; object-fit:cover; border: 1.5px solid #7CB342;">
                     AgriGuard <span>AI</span>
                 </a>
             </div>
@@ -46,11 +52,13 @@
                 </select>
                 <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
                 <div id="userHeaderBox" style="display: flex; align-items: center; gap: 8px;">
-                    <div style="background: var(--primary-light); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.88rem;">
+                    <div
+                        style="background: var(--primary-light); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.88rem;">
                         🧑‍🌾 Active Farmer
                     </div>
                 </div>
-                <button class="btn btn-primary" onclick="switchTab('scanner-tab')" data-i18n="detectBtn">Detect Crop Disease</button>
+                <button class="btn btn-primary" onclick="switchTab('scanner-tab')" data-i18n="detectBtn">Detect Crop
+                    Disease</button>
             </div>
         </div>
     </nav>
@@ -111,64 +119,77 @@
     </div>
 
     <!-- Entrance Live GPS Location & Environment Banner -->
-    <div id="entranceLocationBanner" style="background: linear-gradient(90deg, #1b5e20, #2E7D32); color: white; padding: 10px 20px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(0,0,0,0.12); position: sticky; top: 70px; z-index: 999;">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+    <div id="entranceLocationBanner"
+        style="background: linear-gradient(90deg, #1b5e20, #2E7D32); color: white; padding: 10px 20px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(0,0,0,0.12); position: sticky; top: 70px; z-index: 999;">
+        <div class="container"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 8px;">
                 <span style="font-size: 1.2rem;">📍</span>
                 <span>
-                    <strong id="bannerLocationTitle">Mandya, Karnataka</strong> &nbsp;|&nbsp;
-                    <span id="bannerCoordinatesText">(12.9716° N, 77.5946° E)</span>
+                    <strong id="bannerLocationTitle">Mysuru, Karnataka</strong> &nbsp;|&nbsp;
+                    <span id="bannerCoordinatesText">(12.283106, 76.652999)</span>
                 </span>
             </div>
 
             <div style="display: flex; align-items: center; gap: 14px; font-weight: 600; flex-wrap: wrap;">
-                <span id="bannerWeatherText">🌡️ 28.5°C &nbsp;|&nbsp; 💧 Humidity: 82% &nbsp;|&nbsp; 🌧️ Rain: 12mm</span>
-                <span id="bannerSoilText" style="background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px;">🪨 Soil: Black Cotton Vertisol</span>
-                <button onclick="requestEntranceLocationPermission()" style="background: rgba(255,255,255,0.25); color: white; border: none; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer;" data-i18n="refreshGpsBtn">🎯 Refresh GPS Location</button>
+                <span id="bannerWeatherText">🌡️ 28.5°C &nbsp;|&nbsp; 💧 Humidity: 82% &nbsp;|&nbsp; 🌧️ Rain:
+                    12mm</span>
+                <span id="bannerSoilText"
+                    style="background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px;">🪨 Soil: Black
+                    Cotton Vertisol</span>
+                <button onclick="requestEntranceLocationPermission()"
+                    style="background: rgba(255,255,255,0.25); color: white; border: none; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer;"
+                    data-i18n="refreshGpsBtn">🎯 Refresh GPS Location</button>
             </div>
         </div>
     </div>
 
     <!-- Entrance Language Selection Modal -->
-    <div id="entranceLangModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10005; background: rgba(10, 25, 15, 0.88); backdrop-filter: blur(14px); justify-content: center; align-items: center;">
-        <div class="glass-card" style="width: 90%; max-width: 540px; padding: 36px; border-radius: 28px; box-shadow: 0 24px 48px rgba(0,0,0,0.5); border: 1.5px solid rgba(255, 255, 255, 0.25); text-align: center;">
+    <div id="entranceLangModal" class="modal-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10005; background: rgba(10, 25, 15, 0.88); backdrop-filter: blur(14px); justify-content: center; align-items: center;">
+        <div class="glass-card"
+            style="width: 90%; max-width: 540px; padding: 36px; border-radius: 28px; box-shadow: 0 24px 48px rgba(0,0,0,0.5); border: 1.5px solid rgba(255, 255, 255, 0.25); text-align: center;">
             <div style="font-size: 3.5rem; margin-bottom: 8px;">🌐</div>
-            <h2 style="color: var(--primary); margin: 0; font-size: 1.8rem; font-weight: 800;">Select Language / ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</h2>
-            <p style="color: var(--text-muted-light); font-size: 0.9rem; margin: 8px 0 24px 0;">The portal will automatically update all reports, diagnostics, weather, and tools into your selected language.</p>
+            <h2 style="color: var(--primary); margin: 0; font-size: 1.8rem; font-weight: 800;">Select Language /
+                ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</h2>
+            <p style="color: var(--text-muted-light); font-size: 0.9rem; margin: 8px 0 24px 0;">The portal will
+                automatically update all reports, diagnostics, weather, and tools into your selected language.</p>
 
             <!-- Language Cards Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px;">
-                <button onclick="selectPortalLanguage('en')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid var(--border-color);">
-                    <span style="font-size: 1.5rem;">🌐</span>
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px;">
+                <button onclick="selectPortalLanguage('en')" class="btn lang-modal-card">
+                    <span>🌐</span>
                     <span>English</span>
                 </button>
-                <button onclick="selectPortalLanguage('kn')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid #FF8F00; background: rgba(255,143,0,0.08); color: #e65100;">
-                    <span style="font-size: 1.5rem;">💛</span>
+                <button onclick="selectPortalLanguage('kn')" class="btn lang-modal-card" style="border-color: #FF8F00; background: rgba(255,143,0,0.08); color: #e65100;">
+                    <span>💛</span>
                     <span>ಕನ್ನಡ (Kannada)</span>
                 </button>
-                <button onclick="selectPortalLanguage('hi')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
-                    <span style="font-size: 1.5rem;">🇮🇳</span>
+                <button onclick="selectPortalLanguage('hi')" class="btn lang-modal-card" style="border-color: #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
+                    <span>🇮🇳</span>
                     <span>हिंदी (Hindi)</span>
                 </button>
-                <button onclick="selectPortalLanguage('ta')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid #c62828; background: rgba(198,40,40,0.08); color: #b71c1c;">
-                    <span style="font-size: 1.5rem;">🌺</span>
+                <button onclick="selectPortalLanguage('ta')" class="btn lang-modal-card" style="border-color: #c62828; background: rgba(198,40,40,0.08); color: #b71c1c;">
+                    <span>🌺</span>
                     <span>தமிழ் (Tamil)</span>
                 </button>
-                <button onclick="selectPortalLanguage('te')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid #1565C0; background: rgba(21,101,192,0.08); color: #0d47a1;">
-                    <span style="font-size: 1.5rem;">🌼</span>
+                <button onclick="selectPortalLanguage('te')" class="btn lang-modal-card" style="border-color: #1565C0; background: rgba(21,101,192,0.08); color: #0d47a1;">
+                    <span>🌼</span>
                     <span>తెలుగు (Telugu)</span>
                 </button>
-                <button onclick="selectPortalLanguage('ml')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
-                    <span style="font-size: 1.5rem;">🌴</span>
+                <button onclick="selectPortalLanguage('ml')" class="btn lang-modal-card" style="border-color: #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
+                    <span>🌴</span>
                     <span>മലയാളം (Malayalam)</span>
                 </button>
-                <button onclick="selectPortalLanguage('mr')" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid #e65100; background: rgba(230,81,0,0.08); color: #e65100;">
-                    <span style="font-size: 1.5rem;">🌾</span>
+                <button onclick="selectPortalLanguage('mr')" class="btn lang-modal-card" style="border-color: #e65100; background: rgba(230,81,0,0.08); color: #e65100;">
+                    <span>🌾</span>
                     <span>मराठी (Marathi)</span>
                 </button>
             </div>
 
-            <button onclick="closeEntranceLangModal()" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 700;">✅ Continue to Portal</button>
+            <button onclick="closeEntranceLangModal()" class="btn btn-primary"
+                style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 700;">✅ Continue to Portal</button>
         </div>
     </div>
 
@@ -182,14 +203,51 @@
                 <div class="hero-grid">
                     <div>
                         <div class="section-tag" data-i18n="sectionTagHero">🚀 Autonomous Precision Agriculture</div>
-                        <h1 class="hero-title" data-i18n="heroTitle">Smart Farming Powered by Artificial Intelligence</h1>
+                        <h1 class="hero-title" data-i18n="heroTitle">Smart Farming Powered by Artificial Intelligence
+                        </h1>
                         <p class="hero-subtitle" data-i18n="heroSubtitle">
-                            Empowering farmers with instant AI crop disease detection, soil diagnostics, real-time weather forecasts, market prices, and tailored government scheme assistance.
+                            Empowering farmers with instant AI crop disease detection, soil diagnostics, real-time
+                            weather forecasts, market prices, and tailored government scheme assistance.
                         </p>
                         <div class="hero-cta">
-                            <button class="btn btn-primary" onclick="switchTab('scanner-tab')" data-i18n="btnStartScan">📷 Start AI Disease Detection</button>
-                            <button class="btn btn-secondary" onclick="switchTab('dashboard-tab')" data-i18n="btnViewDash">📊 View Dashboard</button>
-                            <button class="btn btn-outline" onclick="switchTab('soil-tab')" data-i18n="btnSoilTest">🧪 Soil Health Test</button>
+                            <button class="btn btn-primary" onclick="switchTab('scanner-tab')"
+                                data-i18n="btnStartScan">📷 Start AI Disease Detection</button>
+                            <button class="btn btn-secondary" onclick="switchTab('dashboard-tab')"
+                                data-i18n="btnViewDash">📊 View Dashboard</button>
+                            <button class="btn btn-outline" onclick="switchTab('soil-tab')" data-i18n="btnSoilTest">🧪
+                                Soil Health Test</button>
+                        </div>
+                        <!-- App Download Banner -->
+                        <div id="appDownloadBanner"
+                            style="margin-top: 24px; background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%); border-radius: 20px; padding: 20px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; box-shadow: 0 8px 32px rgba(46,125,50,0.35); border: 1.5px solid rgba(255,255,255,0.18);">
+                            <div style="flex: 1; min-width: 200px;">
+                                <div
+                                    style="color: #a5d6a7; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">
+                                    📲 Available Now</div>
+                                <div style="color: #fff; font-size: 1.1rem; font-weight: 900; line-height: 1.3;">
+                                    AgriGuard AI App</div>
+                                <div style="color: #c8e6c9; font-size: 0.82rem; font-weight: 600; margin-top: 3px;">Free
+                                    · Works Offline · For All Farmers</div>
+                            </div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                                <!-- PWA Install Button (shows when browser supports it) -->
+                                <button id="pwaInstallBtn" onclick="triggerPwaInstall()"
+                                    style="display: none; background: #fff; color: #1b5e20; border: none; padding: 12px 20px; border-radius: 14px; font-size: 0.9rem; font-weight: 900; cursor: pointer; gap: 7px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,0.18); transition: transform 0.2s ease;">
+                                    <span style="font-size: 1.1rem;">📱</span> Install App
+                                </button>
+                                <!-- Android APK Download -->
+                                <a href="/download/apk/" id="apkDownloadBtn" download="AgriGuard-AI-v2.4.apk"
+                                    style="background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.5); padding: 11px 18px; border-radius: 14px; font-size: 0.88rem; font-weight: 800; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 7px; backdrop-filter: blur(8px); transition: all 0.2s ease;"
+                                    onmouseover="this.style.background='rgba(255,255,255,0.25)'"
+                                    onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                                    <span style="font-size: 1.1rem;">🤖</span> Download APK
+                                    <span
+                                        style="font-size: 0.7rem; background: #ff6f00; padding: 2px 7px; border-radius: 8px; margin-left: 2px;">Android</span>
+                                </a>
+                                <a href="/download/apk/" onclick="showInstallGuideModal(); return false;"
+                                    style="background: transparent; color: #a5d6a7; border: none; font-size: 0.8rem; font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 4px;">How
+                                    to install? →</a>
+                            </div>
                         </div>
                     </div>
 
@@ -197,11 +255,13 @@
                         <div class="animated-leaf leaf-1">🍃</div>
                         <div class="animated-leaf leaf-2">🌱</div>
                         <div class="animated-leaf leaf-3">🌿</div>
-                        
+
                         <!-- 3D Stacked Shuffling Card Deck Container -->
                         <div class="card-stack-wrapper">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; z-index: 20; position: relative;">
-                                <span style="font-weight:700; color:var(--primary);" data-i18n="liveScanTitle">⚡ Live AI Scanner</span>
+                            <div
+                                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; z-index: 20; position: relative;">
+                                <span style="font-weight:700; color:var(--primary);" data-i18n="liveScanTitle">⚡ Live AI
+                                    Scanner</span>
                                 <span class="severity-pill severity-LOW" data-i18n="accuracyPill">98.4% Accuracy</span>
                             </div>
 
@@ -213,7 +273,8 @@
                                         <span class="crop-emoji">🍅</span>
                                         <h4 class="crop-title">Leaf Early Blight Detected</h4>
                                         <p class="crop-desc">Confidence: 96.2% | Fungal Leaf Spot</p>
-                                        <button class="btn btn-accent stack-btn" onclick="quickSelectScannerCrop('Tomato')">🔍 Scan Tomato Crop</button>
+                                        <button class="btn btn-accent stack-btn"
+                                            onclick="quickSelectScannerCrop('Tomato')">🔍 Scan Tomato Crop</button>
                                     </div>
                                 </div>
 
@@ -224,7 +285,8 @@
                                         <span class="crop-emoji">🫚</span>
                                         <h4 class="crop-title">Soft Rot & Leaf Fleck</h4>
                                         <p class="crop-desc">Confidence: 95.1% | Bacterial Soft Rot</p>
-                                        <button class="btn btn-accent stack-btn" onclick="quickSelectScannerCrop('Ginger')">🔍 Scan Ginger Crop</button>
+                                        <button class="btn btn-accent stack-btn"
+                                            onclick="quickSelectScannerCrop('Ginger')">🔍 Scan Ginger Crop</button>
                                     </div>
                                 </div>
 
@@ -235,7 +297,8 @@
                                         <span class="crop-emoji">🥬</span>
                                         <h4 class="crop-title">Black Rot Infection</h4>
                                         <p class="crop-desc">Confidence: 97.0% | Xanthomonas Campestris</p>
-                                        <button class="btn btn-accent stack-btn" onclick="quickSelectScannerCrop('Cabbage')">🔍 Scan Cabbage Crop</button>
+                                        <button class="btn btn-accent stack-btn"
+                                            onclick="quickSelectScannerCrop('Cabbage')">🔍 Scan Cabbage Crop</button>
                                     </div>
                                 </div>
 
@@ -246,21 +309,25 @@
                                         <span class="crop-emoji">🍂</span>
                                         <h4 class="crop-title">Tobacco Mosaic Virus (TMV)</h4>
                                         <p class="crop-desc">Confidence: 95.6% | Viral Leaf Mosaic</p>
-                                        <button class="btn btn-accent stack-btn" onclick="quickSelectScannerCrop('Tobacco')">🔍 Scan Tobacco Crop</button>
+                                        <button class="btn btn-accent stack-btn"
+                                            onclick="quickSelectScannerCrop('Tobacco')">🔍 Scan Tobacco Crop</button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Shuffling Card Controls -->
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; position:relative; z-index:20;">
-                                <button class="slider-arrow-btn" onclick="shuffleCardBack()" title="Previous Card">❮</button>
+                            <div
+                                style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; position:relative; z-index:20;">
+                                <button class="slider-arrow-btn" onclick="shuffleCardBack()"
+                                    title="Previous Card">❮</button>
                                 <div class="slider-dots" id="stackDots">
                                     <span class="dot active" onclick="jumpToStackCard(0)"></span>
                                     <span class="dot" onclick="jumpToStackCard(1)"></span>
                                     <span class="dot" onclick="jumpToStackCard(2)"></span>
                                     <span class="dot" onclick="jumpToStackCard(3)"></span>
                                 </div>
-                                <button class="slider-arrow-btn" onclick="shuffleCardNext()" title="Shuffle Next Card">🎴 Shuffle ❯</button>
+                                <button class="slider-arrow-btn" onclick="shuffleCardNext()"
+                                    title="Shuffle Next Card">🎴 Shuffle ❯</button>
                             </div>
                         </div>
                     </div>
@@ -298,44 +365,51 @@
                 <div class="section-header">
                     <div class="section-tag" data-i18n="sectionTagFeatures">🌟 Comprehensive Ecosystem</div>
                     <h2 class="section-title" data-i18n="titleFeatures">All-in-One Smart Farming Platform</h2>
-                    <p class="section-desc" data-i18n="descFeatures">From instant disease detection to market trends and financial logs, everything a modern farmer needs.</p>
+                    <p class="section-desc" data-i18n="descFeatures">From instant disease detection to market trends and
+                        financial logs, everything a modern farmer needs.</p>
                 </div>
 
                 <div class="features-grid">
                     <div class="glass-card feature-card" onclick="switchTab('scanner-tab')" style="cursor:pointer;">
                         <div class="feature-icon">🔍</div>
                         <h3 class="feature-title" data-i18n="feat1Title">AI Crop Disease Detection</h3>
-                        <p class="feature-desc" data-i18n="feat1Desc">Upload leaf photos to receive instant AI diagnosis, severity score, organic treatment, and chemical fungicide advice.</p>
+                        <p class="feature-desc" data-i18n="feat1Desc">Upload leaf photos to receive instant AI
+                            diagnosis, severity score, organic treatment, and chemical fungicide advice.</p>
                     </div>
 
                     <div class="glass-card feature-card" onclick="switchTab('weather-tab')" style="cursor:pointer;">
                         <div class="feature-icon">🌦️</div>
                         <h3 class="feature-title" data-i18n="feat3Title">Real-Time Weather & Alerts</h3>
-                        <p class="feature-desc" data-i18n="feat3Desc">7-day forecast with humidity, rainfall predictions, UV index, and critical frost or heatwave warnings.</p>
+                        <p class="feature-desc" data-i18n="feat3Desc">7-day forecast with humidity, rainfall
+                            predictions, UV index, and critical frost or heatwave warnings.</p>
                     </div>
 
                     <div class="glass-card feature-card" onclick="switchTab('market-tab')" style="cursor:pointer;">
                         <div class="feature-icon">📈</div>
                         <h3 class="feature-title" data-i18n="feat4Title">Market Mandi Prices</h3>
-                        <p class="feature-desc" data-i18n="feat4Desc">Daily crop price tracking across regional markets with historical trend charts and best day to sell recommendations.</p>
+                        <p class="feature-desc" data-i18n="feat4Desc">Daily crop price tracking across regional markets
+                            with historical trend charts and best day to sell recommendations.</p>
                     </div>
 
                     <div class="glass-card feature-card" onclick="switchTab('soil-tab')" style="cursor:pointer;">
                         <div class="feature-icon">🧪</div>
                         <h3 class="feature-title" data-i18n="feat2Title">Soil Health & NPK Diagnostics</h3>
-                        <p class="feature-desc" data-i18n="feat2Desc">Input Nitrogen, Phosphorus, Potassium, and pH values to generate customized fertilizer plans.</p>
+                        <p class="feature-desc" data-i18n="feat2Desc">Input Nitrogen, Phosphorus, Potassium, and pH
+                            values to generate customized fertilizer plans.</p>
                     </div>
 
                     <div class="glass-card feature-card" onclick="switchTab('schemes-tab')" style="cursor:pointer;">
                         <div class="feature-icon">🏛️</div>
                         <h3 class="feature-title" data-i18n="feat5Title">Government Schemes</h3>
-                        <p class="feature-desc" data-i18n="feat5Desc">Search and apply for PM-KISAN, PMFBY insurance, and equipment subsidies with eligibility verification.</p>
+                        <p class="feature-desc" data-i18n="feat5Desc">Search and apply for PM-KISAN, PMFBY insurance,
+                            and equipment subsidies with eligibility verification.</p>
                     </div>
 
                     <div class="glass-card feature-card" onclick="switchTab('expert-tab')" style="cursor:pointer;">
                         <div class="feature-icon">👨‍🌾</div>
                         <h3 class="feature-title" data-i18n="feat6Title">Expert Consultation</h3>
-                        <p class="feature-desc" data-i18n="feat6Desc">Connect with certified plant pathologists and senior agronomists via video call or chat appointments.</p>
+                        <p class="feature-desc" data-i18n="feat6Desc">Connect with certified plant pathologists and
+                            senior agronomists via video call or chat appointments.</p>
                     </div>
                 </div>
             </div>
@@ -351,27 +425,32 @@
                     <div class="glass-card process-step">
                         <div class="step-badge">1</div>
                         <h4>Upload Image</h4>
-                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Capture or upload a clear photo of the affected crop leaf.</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Capture or upload a
+                            clear photo of the affected crop leaf.</p>
                     </div>
                     <div class="glass-card process-step">
                         <div class="step-badge">2</div>
                         <h4>AI Analysis</h4>
-                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Neural vision engine extracts color, texture, and lesion features.</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Neural vision engine
+                            extracts color, texture, and lesion features.</p>
                     </div>
                     <div class="glass-card process-step">
                         <div class="step-badge">3</div>
                         <h4>Disease Prediction</h4>
-                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Receive exact disease name, confidence %, and severity level.</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Receive exact
+                            disease name, confidence %, and severity level.</p>
                     </div>
                     <div class="glass-card process-step">
                         <div class="step-badge">4</div>
                         <h4>Treatment Plan</h4>
-                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Get tailored organic remedies, chemical dosages, and store locations.</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Get tailored organic
+                            remedies, chemical dosages, and store locations.</p>
                     </div>
                     <div class="glass-card process-step">
                         <div class="step-badge">5</div>
                         <h4>Recovery Tracking</h4>
-                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Track crop health progress over time until full recovery.</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted-light); margin-top:8px;">Track crop health
+                            progress over time until full recovery.</p>
                     </div>
                 </div>
             </div>
@@ -382,7 +461,8 @@
             <div class="section-header">
                 <div class="section-tag" data-i18n="scanTabTag">🔬 Vision AI Diagnostic Studio</div>
                 <h2 class="section-title" data-i18n="scanTabTitle">Instant Crop Disease Diagnosis</h2>
-                <p class="section-desc">Upload a crop leaf photo to identify diseases, severity score, organic remedies, and required agrochemicals.</p>
+                <p class="section-desc">Upload a crop leaf photo to identify diseases, severity score, organic remedies,
+                    and required agrochemicals.</p>
             </div>
 
             <div class="scanner-container">
@@ -391,8 +471,9 @@
                         <div class="form-group">
                             <label class="form-label">Crop Type Selection</label>
                             <select class="form-control" id="cropTypeSelect">
-                                <option value="Auto-Detect" selected>🤖 Auto-Detect Crop & Disease (Single Photo)</option>
-                                
+                                <option value="Auto-Detect" selected>🤖 Auto-Detect Crop & Disease (Single Photo)
+                                </option>
+
                                 <optgroup label="🌾 Cereals">
                                     <option value="Rice">Rice (West Bengal, UP, Punjab, Telangana, AP)</option>
                                     <option value="Wheat">Wheat (UP, MP, Punjab, Haryana, Rajasthan)</option>
@@ -421,17 +502,23 @@
                                 </optgroup>
 
                                 <optgroup label="🌱 Fibre & Commercial Cash Crops">
-                                    <option value="Cotton">Cotton (Gujarat, Maharashtra, Telangana, Punjab, Haryana, Rajasthan)</option>
-                                    <option value="Sugarcane">Sugarcane (UP, Maharashtra, Karnataka, TN, Bihar, Punjab)</option>
+                                    <option value="Cotton">Cotton (Gujarat, Maharashtra, Telangana, Punjab, Haryana,
+                                        Rajasthan)</option>
+                                    <option value="Sugarcane">Sugarcane (UP, Maharashtra, Karnataka, TN, Bihar, Punjab)
+                                    </option>
                                     <option value="Jute">Jute (West Bengal, Assam, Bihar, Odisha, Meghalaya)</option>
-                                    <option value="Tobacco">Tobacco (AP, Gujarat, Karnataka, Telangana, UP, Bihar)</option>
-                                    <option value="Banana Fibre">Banana Fibre (TN, Maharashtra, Gujarat, Kerala, Karnataka)</option>
+                                    <option value="Tobacco">Tobacco (AP, Gujarat, Karnataka, Telangana, UP, Bihar)
+                                    </option>
+                                    <option value="Banana Fibre">Banana Fibre (TN, Maharashtra, Gujarat, Kerala,
+                                        Karnataka)</option>
                                     <option value="Industrial Hemp">Industrial Hemp (Uttarakhand, HP, J&K)</option>
-                                    <option value="Flax (Linseed)">Flax / Linseed (MP, Chhattisgarh, UP, Bihar, Maharashtra)</option>
+                                    <option value="Flax (Linseed)">Flax / Linseed (MP, Chhattisgarh, UP, Bihar,
+                                        Maharashtra)</option>
                                     <option value="Sisal">Sisal (Odisha, AP, Karnataka, TN)</option>
                                     <option value="Sun Hemp">Sun Hemp (UP, MP, Maharashtra, AP)</option>
                                     <option value="Mesta">Mesta (Odisha, West Bengal, Assam, AP)</option>
-                                    <option value="Guar">Guar / Cluster Bean (Rajasthan, Haryana, Gujarat, Punjab)</option>
+                                    <option value="Guar">Guar / Cluster Bean (Rajasthan, Haryana, Gujarat, Punjab)
+                                    </option>
                                 </optgroup>
 
                                 <optgroup label="☕ Plantation & Industrial Crops">
@@ -439,31 +526,42 @@
                                     <option value="Coffee">Coffee (Karnataka, Kerala, TN)</option>
                                     <option value="Rubber">Rubber (Kerala, TN, Karnataka, Tripura)</option>
                                     <option value="Coconut">Coconut (Kerala, TN, Karnataka, AP, Odisha)</option>
-                                    <option value="Arecanut">Arecanut / Betel Nut (Karnataka, Kerala, Assam, Meghalaya)</option>
-                                    <option value="Betel Vine">Betel Vine / Paan (West Bengal, Odisha, KA, AP, TN, Bihar)</option>
+                                    <option value="Arecanut">Arecanut / Betel Nut (Karnataka, Kerala, Assam, Meghalaya)
+                                    </option>
+                                    <option value="Betel Vine">Betel Vine / Paan (West Bengal, Odisha, KA, AP, TN,
+                                        Bihar)</option>
                                     <option value="Cocoa">Cocoa (AP, Karnataka, Kerala, TN)</option>
-                                    <option value="Cashew">Cashew (Maharashtra, Goa, Kerala, KA, AP, Odisha, TN)</option>
-                                    <option value="Bamboo">Bamboo (Assam, Arunachal, Mizoram, Tripura, KA, Kerala)</option>
-                                    <option value="Mulberry">Mulberry (Karnataka, AP, TN, Telangana, West Bengal)</option>
+                                    <option value="Cashew">Cashew (Maharashtra, Goa, Kerala, KA, AP, Odisha, TN)
+                                    </option>
+                                    <option value="Bamboo">Bamboo (Assam, Arunachal, Mizoram, Tripura, KA, Kerala)
+                                    </option>
+                                    <option value="Mulberry">Mulberry (Karnataka, AP, TN, Telangana, West Bengal)
+                                    </option>
                                     <option value="Oil Palm">Oil Palm (AP, Telangana, KA, TN, Kerala, Mizoram)</option>
                                 </optgroup>
 
                                 <optgroup label="🍎 All Fruits & Subtropical Crops">
                                     <option value="Tomato">Tomato (AP, Karnataka, MP, Maharashtra, Odisha)</option>
                                     <option value="Mango">Mango (UP, AP, Telangana, Karnataka, Bihar, Gujarat)</option>
-                                    <option value="Banana">Banana (TN, Maharashtra, Gujarat, Kerala, AP, Karnataka)</option>
+                                    <option value="Banana">Banana (TN, Maharashtra, Gujarat, Kerala, AP, Karnataka)
+                                    </option>
                                     <option value="Apple">Apple (J&K, HP, Uttarakhand)</option>
                                     <option value="Papaya">Papaya (AP, Gujarat, MP, Karnataka, Maharashtra)</option>
-                                    <option value="Orange / Citrus">Orange / Citrus (Maharashtra, Punjab, MP, AP)</option>
+                                    <option value="Orange / Citrus">Orange / Citrus (Maharashtra, Punjab, MP, AP)
+                                    </option>
                                     <option value="Guava">Guava (UP, MP, Bihar, AP, Maharashtra)</option>
-                                    <option value="Pomegranate">Pomegranate (Maharashtra, Karnataka, Gujarat, AP)</option>
+                                    <option value="Pomegranate">Pomegranate (Maharashtra, Karnataka, Gujarat, AP)
+                                    </option>
                                     <option value="Grapes">Grapes (Maharashtra, Karnataka, TN, AP)</option>
                                     <option value="Watermelon">Watermelon (Karnataka, TN, AP, Maharashtra, UP)</option>
                                     <option value="Muskmelon">Muskmelon (Punjab, UP, Haryana, MP)</option>
-                                    <option value="Pineapple">Pineapple (West Bengal, Assam, Tripura, Karnataka)</option>
+                                    <option value="Pineapple">Pineapple (West Bengal, Assam, Tripura, Karnataka)
+                                    </option>
                                     <option value="Strawberry">Strawberry (Maharashtra, HP, Meghalaya, KA)</option>
-                                    <option value="Custard Apple (Sitaphal)">Custard Apple / Sitaphal (Maharashtra, AP, Telangana)</option>
-                                    <option value="Sapota (Chiku)">Sapota / Chiku (Gujarat, Karnataka, Maharashtra, TN)</option>
+                                    <option value="Custard Apple (Sitaphal)">Custard Apple / Sitaphal (Maharashtra, AP,
+                                        Telangana)</option>
+                                    <option value="Sapota (Chiku)">Sapota / Chiku (Gujarat, Karnataka, Maharashtra, TN)
+                                    </option>
                                     <option value="Lychee">Lychee (Bihar, West Bengal, Assam)</option>
                                     <option value="Jackfruit">Jackfruit (Kerala, KA, TN, Assam, WB)</option>
                                     <option value="Fig (Anjeer)">Fig / Anjeer (Maharashtra, Karnataka, TN)</option>
@@ -474,10 +572,13 @@
                                 <optgroup label="🥦 All Vegetables, Tubers & Spices">
                                     <option value="Potato">Potato (UP, West Bengal, Bihar, Gujarat, Punjab)</option>
                                     <option value="Onion">Onion (Maharashtra, Karnataka, MP, Gujarat)</option>
-                                    <option value="Brinjal">Brinjal / Eggplant (West Bengal, Odisha, Gujarat, Bihar)</option>
+                                    <option value="Brinjal">Brinjal / Eggplant (West Bengal, Odisha, Gujarat, Bihar)
+                                    </option>
                                     <option value="Okra">Okra / Lady Finger (Gujarat, UP, WB, Bihar)</option>
-                                    <option value="Chilli / Red Pepper">Chilli / Red Pepper (AP, Telangana, KA, MP)</option>
-                                    <option value="Capsicum / Bell Pepper">Capsicum / Bell Pepper (Karnataka, HP, MH)</option>
+                                    <option value="Chilli / Red Pepper">Chilli / Red Pepper (AP, Telangana, KA, MP)
+                                    </option>
+                                    <option value="Capsicum / Bell Pepper">Capsicum / Bell Pepper (Karnataka, HP, MH)
+                                    </option>
                                     <option value="Garlic">Garlic (MP, Rajasthan, Gujarat, UP)</option>
                                     <option value="Ginger">Ginger (Assam, Kerala, KA, Meghalaya)</option>
                                     <option value="Turmeric">Turmeric (Telangana, Maharashtra, KA, TN)</option>
@@ -487,8 +588,10 @@
                                     <option value="Radish">Radish (WB, Haryana, Bihar, Punjab)</option>
                                     <option value="Beetroot">Beetroot (TN, Karnataka, Maharashtra)</option>
                                     <option value="Spinach (Palak)">Spinach / Palak (UP, Punjab, Haryana)</option>
-                                    <option value="Fenugreek (Methi)">Fenugreek / Methi (Rajasthan, MP, Gujarat)</option>
-                                    <option value="Coriander (Dhania)">Coriander / Dhania (MP, Rajasthan, Gujarat)</option>
+                                    <option value="Fenugreek (Methi)">Fenugreek / Methi (Rajasthan, MP, Gujarat)
+                                    </option>
+                                    <option value="Coriander (Dhania)">Coriander / Dhania (MP, Rajasthan, Gujarat)
+                                    </option>
                                     <option value="Cucumber">Cucumber (Haryana, AP, KA, MH)</option>
                                     <option value="Pumpkin">Pumpkin (UP, WB, Odisha, Kerala)</option>
                                     <option value="Bitter Gourd (Karela)">Bitter Gourd / Karela (UP, MP, WB)</option>
@@ -509,51 +612,74 @@
                         <div class="dropzone" id="dropzone" style="cursor: pointer;">
                             <span style="font-size: 3rem;">📸</span>
                             <h4 style="margin-top: 12px;">Snap Photo or Drop Crop Image Here</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-muted-light); margin: 8px 0 16px;">Click here or drag-and-drop to upload from gallery or snap photo!</p>
-                            
+                            <p style="font-size: 0.85rem; color: var(--text-muted-light); margin: 8px 0 16px;">Click
+                                here or drag-and-drop to upload from gallery or snap photo!</p>
+
                             <!-- File Pickers (Gallery & Native Camera) -->
                             <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
-                            <input type="file" id="cameraFileInput" accept="image/*" capture="environment" style="display: none;">
+                            <input type="file" id="cameraFileInput" accept="image/*" capture="environment"
+                                style="display: none;">
 
-                            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; z-index: 5; position: relative;">
-                                <button type="button" class="btn btn-accent" id="liveSnapCameraBtn">📷 Take Photo & Auto-Diagnose</button>
-                                <button type="button" class="btn btn-secondary" id="uploadMediaBtn">📁 Access Gallery & Upload</button>
+                            <div
+                                style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; z-index: 5; position: relative;">
+                                <button type="button" class="btn btn-accent" id="liveSnapCameraBtn">📷 Take Photo &
+                                    Auto-Diagnose</button>
+                                <button type="button" class="btn btn-secondary" id="uploadMediaBtn">📁 Access Gallery &
+                                    Upload</button>
                             </div>
                         </div>
 
                         <!-- Image Preview Box (Shown immediately upon photo selection or camera snap) -->
-                        <div id="imagePreviewBox" style="display: none; margin-top: 16px; padding: 18px; border-radius: 16px; background: rgba(255,255,255,0.92); border: 2px solid var(--primary); box-shadow: 0 8px 24px rgba(46,125,50,0.15); text-align: center;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <span style="font-weight: 800; color: var(--primary); font-size: 0.92rem;">✅ Crop Photo Loaded & Ready for Scan</span>
-                                <button type="button" id="clearPreviewBtn" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #d32f2f; font-weight: 800;" title="Remove Photo">✕</button>
+                        <div id="imagePreviewBox"
+                            style="display: none; margin-top: 16px; padding: 18px; border-radius: 16px; background: rgba(255,255,255,0.92); border: 2px solid var(--primary); box-shadow: 0 8px 24px rgba(46,125,50,0.15); text-align: center;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-weight: 800; color: var(--primary); font-size: 0.92rem;">✅ Crop Photo
+                                    Loaded & Ready for Scan</span>
+                                <button type="button" id="clearPreviewBtn"
+                                    style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #d32f2f; font-weight: 800;"
+                                    title="Remove Photo">✕</button>
                             </div>
-                            <div style="max-height: 240px; overflow: hidden; border-radius: 12px; margin-bottom: 8px; background: #111;">
-                                <img id="previewImg" src="" alt="Crop Leaf Preview" style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 12px;">
+                            <div
+                                style="max-height: 240px; overflow: hidden; border-radius: 12px; margin-bottom: 8px; background: #111;">
+                                <img id="previewImg" src="" alt="Crop Leaf Preview"
+                                    style="width: 100%; max-height: 240px; object-fit: contain; border-radius: 12px;">
                             </div>
-                            <div id="fileDetailsText" style="font-size: 0.82rem; color: var(--text-dark); font-weight: 700;"></div>
+                            <div id="fileDetailsText"
+                                style="font-size: 0.82rem; color: var(--text-dark); font-weight: 700;"></div>
                         </div>
 
                         <!-- Live WebCam Camera Modal -->
-                        <div id="cameraModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10009; background: rgba(10, 25, 15, 0.92); backdrop-filter: blur(14px); justify-content: center; align-items: center;">
-                            <div class="glass-card" style="width: 92%; max-width: 560px; padding: 24px; border-radius: 24px; box-shadow: 0 24px 50px rgba(0,0,0,0.5); text-align: center; border: 1.5px solid rgba(255,255,255,0.25);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                    <h3 style="color: var(--primary); margin: 0; font-weight: 800; font-size: 1.3rem;">📷 Live Crop Camera</h3>
-                                    <button type="button" id="closeCameraModal" style="background: none; border: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer;">✕</button>
+                        <div id="cameraModal" class="modal-overlay"
+                            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10009; background: rgba(10, 25, 15, 0.92); backdrop-filter: blur(14px); justify-content: center; align-items: center;">
+                            <div class="glass-card"
+                                style="width: 92%; max-width: 560px; padding: 24px; border-radius: 24px; box-shadow: 0 24px 50px rgba(0,0,0,0.5); text-align: center; border: 1.5px solid rgba(255,255,255,0.25);">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                                    <h3 style="color: var(--primary); margin: 0; font-weight: 800; font-size: 1.3rem;">
+                                        📷 Live Crop Camera</h3>
+                                    <button type="button" id="closeCameraModal"
+                                        style="background: none; border: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer;">✕</button>
                                 </div>
-                                
-                                <div style="position: relative; width: 100%; height: 320px; background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 16px;">
-                                    <video id="cameraVideo" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+
+                                <div
+                                    style="position: relative; width: 100%; height: 320px; background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 16px;">
+                                    <video id="cameraVideo" autoplay playsinline
+                                        style="width: 100%; height: 100%; object-fit: cover;"></video>
                                     <canvas id="cameraCanvas" style="display: none;"></canvas>
-                                    <div style="position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.6); color: #81c784; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;">
+                                    <div
+                                        style="position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.6); color: #81c784; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;">
                                         🟢 Live HD Scanner
                                     </div>
                                 </div>
 
                                 <div style="display: flex; gap: 12px;">
-                                    <button type="button" id="snapAndDetectBtn" class="btn btn-primary" style="flex: 1; padding: 14px; font-weight: 800; font-size: 1.05rem;">
+                                    <button type="button" id="snapAndDetectBtn" class="btn btn-primary"
+                                        style="flex: 1; padding: 14px; font-weight: 800; font-size: 1.05rem;">
                                         📸 Snap & Auto-Diagnose
                                     </button>
-                                    <button type="button" id="closeCameraModalBtn" class="btn btn-outline" style="padding: 14px; font-weight: 700;">
+                                    <button type="button" id="closeCameraModalBtn" class="btn btn-outline"
+                                        style="padding: 14px; font-weight: 700;">
                                         Cancel
                                     </button>
                                 </div>
@@ -561,29 +687,42 @@
                         </div>
 
                         <!-- Device Permission Request Modal -->
-                        <div id="cameraMediaPermissionModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10008; background: rgba(10, 25, 15, 0.88); backdrop-filter: blur(12px); justify-content: center; align-items: center;">
-                            <div class="glass-card" style="width: 90%; max-width: 480px; padding: 32px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center; border: 1.5px solid rgba(255,255,255,0.25);">
+                        <div id="cameraMediaPermissionModal" class="modal-overlay"
+                            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10008; background: rgba(10, 25, 15, 0.88); backdrop-filter: blur(12px); justify-content: center; align-items: center;">
+                            <div class="glass-card"
+                                style="width: 90%; max-width: 480px; padding: 32px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center; border: 1.5px solid rgba(255,255,255,0.25);">
                                 <div style="font-size: 3.5rem; margin-bottom: 8px;" id="permModalIcon">📷</div>
-                                <h2 style="color: var(--primary); margin: 0; font-size: 1.6rem; font-weight: 800;" id="permModalTitle">Device Permission Request</h2>
-                                <p style="color: var(--text-dark); font-size: 0.95rem; margin: 12px 0 24px 0; line-height: 1.5;" id="permModalDesc">
-                                    AgriGuard AI requires permission to access your device <strong>Camera</strong> to click photos of crop leaves or access your <strong>Media Storage / Gallery</strong> to select crop photos.
+                                <h2 style="color: var(--primary); margin: 0; font-size: 1.6rem; font-weight: 800;"
+                                    id="permModalTitle">Device Permission Request</h2>
+                                <p style="color: var(--text-dark); font-size: 0.95rem; margin: 12px 0 24px 0; line-height: 1.5;"
+                                    id="permModalDesc">
+                                    AgriGuard AI requires permission to access your device <strong>Camera</strong> to
+                                    click photos of crop leaves or access your <strong>Media Storage / Gallery</strong>
+                                    to select crop photos.
                                 </p>
 
-                                <div style="background: var(--primary-light); padding: 14px; border-radius: 14px; text-align: left; margin-bottom: 24px; font-size: 0.85rem; color: var(--primary);">
+                                <div
+                                    style="background: var(--primary-light); padding: 14px; border-radius: 14px; text-align: left; margin-bottom: 24px; font-size: 0.85rem; color: var(--primary);">
                                     <div style="font-weight: 700; margin-bottom: 4px;">🛡️ Privacy Commitment:</div>
-                                    Photos captured or uploaded are used strictly for instant AI disease detection & diagnostic report generation on your device.
+                                    Photos captured or uploaded are used strictly for instant AI disease detection &
+                                    diagnostic report generation on your device.
                                 </div>
 
                                 <div style="display: flex; gap: 12px;">
-                                    <button type="button" id="permModalAllowBtn" class="btn btn-primary" style="flex: 1; padding: 12px; font-size: 1rem; font-weight: 700;">✅ Allow Permission</button>
-                                    <button type="button" id="permModalDenyBtn" class="btn btn-outline" style="padding: 12px; font-size: 0.95rem; font-weight: 700;">✕ Deny</button>
+                                    <button type="button" id="permModalAllowBtn" class="btn btn-primary"
+                                        style="flex: 1; padding: 12px; font-size: 1rem; font-weight: 700;">✅ Allow
+                                        Permission</button>
+                                    <button type="button" id="permModalDenyBtn" class="btn btn-outline"
+                                        style="padding: 12px; font-size: 0.95rem; font-weight: 700;">✕ Deny</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group" style="margin-top: 18px;">
-                            <label class="form-label" style="font-weight: 700; color: var(--primary);">🌐 Report Language / ವರದಿ ಭಾಷೆ / रिपोर्ट भाषा</label>
-                            <select class="form-control" id="reportLangSelect" style="font-weight: 700; border: 2px solid var(--primary); background: var(--primary-light);">
+                            <label class="form-label" style="font-weight: 700; color: var(--primary);">🌐 Report
+                                Language / ವರದಿ ಭಾಷೆ / रिपोर्ट भाषा</label>
+                            <select class="form-control" id="reportLangSelect"
+                                style="font-weight: 700; border: 2px solid var(--primary); background: var(--primary-light);">
                                 <option value="en" selected>🇬🇧 English</option>
                                 <option value="kn">🇮🇳 Kannada (ಕನ್ನಡ)</option>
                                 <option value="hi">🇮🇳 Hindi (हिंदी)</option>
@@ -594,7 +733,8 @@
                             </select>
                         </div>
 
-                        <button class="btn btn-primary" id="startDetectBtn" style="width: 100%; margin-top: 14px; padding: 14px;">🔍 Run AI Diagnostic Scan</button>
+                        <button class="btn btn-primary" id="startDetectBtn"
+                            style="width: 100%; margin-top: 14px; padding: 14px;">🔍 Run AI Diagnostic Scan</button>
                     </div>
                 </div>
 
@@ -602,7 +742,8 @@
                     <div class="glass-card" style="padding: 40px; text-align: center; color: var(--text-muted-light);">
                         <span style="font-size: 4rem;">🌿</span>
                         <h3 style="margin-top: 16px; color: var(--text-dark);">No Active Scan Result</h3>
-                        <p>Upload a crop leaf image on the left and click "Run AI Diagnostic Scan" to generate full disease report.</p>
+                        <p>Upload a crop leaf image on the left and click "Run AI Diagnostic Scan" to generate full
+                            disease report.</p>
                     </div>
                 </div>
             </div>
@@ -620,12 +761,14 @@
                 <div class="glass-card col-4" style="padding: 24px;">
                     <h3 style="color: var(--primary); margin-bottom: 16px;">🌱 Crop Health Score</h3>
                     <div style="text-align: center; margin: 20px 0;">
-                        <div style="display: inline-block; width: 140px; height: 140px; border-radius: 50%; border: 10px solid var(--primary); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <div
+                            style="display: inline-block; width: 140px; height: 140px; border-radius: 50%; border: 10px solid var(--primary); display: flex; align-items: center; justify-content: center; flex-direction: column;">
                             <span style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">92%</span>
                             <span style="font-size: 0.75rem; color: var(--text-muted-light);">Healthy</span>
                         </div>
                     </div>
-                    <p style="font-size: 0.9rem; text-align: center; color: var(--text-muted-light);">Green Valley Acres | 4.5 Acres under active cultivation.</p>
+                    <p style="font-size: 0.9rem; text-align: center; color: var(--text-muted-light);">Green Valley Acres
+                        | 4.5 Acres under active cultivation.</p>
                 </div>
 
                 <!-- Weather Quick Summary -->
@@ -638,7 +781,8 @@
                         </div>
                         <span style="font-size: 3.5rem;">🌧️</span>
                     </div>
-                    <div style="background: #fff8e1; color: #f57f17; padding: 10px 14px; border-radius: 10px; margin-top: 16px; font-size: 0.85rem; font-weight: 600;">
+                    <div
+                        style="background: #fff8e1; color: #f57f17; padding: 10px 14px; border-radius: 10px; margin-top: 16px; font-size: 0.85rem; font-weight: 600;">
                         ⚠️ Warning: Rainfall alert expected on Sunday. Delay pesticide spraying.
                     </div>
                 </div>
@@ -647,28 +791,34 @@
                 <div class="glass-card col-4" style="padding: 24px;">
                     <h3 style="color: var(--primary); margin-bottom: 16px;">📈 Yield & Harvest Forecast</h3>
                     <h2 style="font-size: 2.2rem; color: var(--primary);">14.8 Tonnes</h2>
-                    <p style="color: var(--text-muted-light); margin-bottom: 14px;">Estimated Harvest Yield for current season.</p>
-                    <div style="background: var(--primary-light); padding: 12px; border-radius: 10px; font-size: 0.9rem;">
+                    <p style="color: var(--text-muted-light); margin-bottom: 14px;">Estimated Harvest Yield for current
+                        season.</p>
+                    <div
+                        style="background: var(--primary-light); padding: 12px; border-radius: 10px; font-size: 0.9rem;">
                         <strong>Expected Gross Income:</strong> ₹4,15,000
                     </div>
                 </div>
 
                 <!-- Financial Chart -->
                 <div class="glass-card col-8" style="padding: 24px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">💰 Financial Breakdown (Income vs Expenses)</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">💰 Financial Breakdown (Income vs Expenses)
+                    </h3>
                     <canvas id="farmFinanceChart" height="120"></canvas>
                 </div>
 
                 <!-- Active Fields -->
                 <div class="glass-card col-4" style="padding: 24px;">
                     <h3 style="color: var(--primary); margin-bottom: 16px;">🌾 Active Fields</h3>
-                    <div style="margin-bottom: 12px; padding: 12px; background: var(--primary-light); border-radius: 10px;">
+                    <div
+                        style="margin-bottom: 12px; padding: 12px; background: var(--primary-light); border-radius: 10px;">
                         <strong>North Field A (Tomatoes)</strong><br>
-                        <span style="font-size: 0.85rem; color: var(--text-muted-light);">1.5 Acres | Planted 35 days ago</span>
+                        <span style="font-size: 0.85rem; color: var(--text-muted-light);">1.5 Acres | Planted 35 days
+                            ago</span>
                     </div>
                     <div style="padding: 12px; background: var(--primary-light); border-radius: 10px;">
                         <strong>South Field B (Rice Paddy)</strong><br>
-                        <span style="font-size: 0.85rem; color: var(--text-muted-light);">2.0 Acres | Planted 60 days ago</span>
+                        <span style="font-size: 0.85rem; color: var(--text-muted-light);">2.0 Acres | Planted 60 days
+                            ago</span>
                     </div>
                 </div>
             </div>
@@ -679,7 +829,8 @@
             <div class="section-header">
                 <div class="section-tag" data-i18n="soilTabTag">🧪 Soil Chemistry Analysis</div>
                 <h2 class="section-title" data-i18n="soilTabTitle">NPK & Soil Diagnostic Tool</h2>
-                <p class="section-desc">Enter your field soil test parameters to calculate health index and custom fertilizer recommendations.</p>
+                <p class="section-desc">Enter your field soil test parameters to calculate health index and custom
+                    fertilizer recommendations.</p>
             </div>
 
             <div class="dashboard-grid">
@@ -702,7 +853,8 @@
                             <label class="form-label">Soil pH Level</label>
                             <input type="number" step="0.1" class="form-control" id="soilPH" value="6.8" required>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">⚡ Generate Soil Report</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">⚡ Generate
+                            Soil Report</button>
                     </form>
                 </div>
 
@@ -721,7 +873,8 @@
             <div class="section-header">
                 <div class="section-tag" data-i18n="weatherTabTag">🌦️ Climate Intelligence & Crop Suitability</div>
                 <h2 class="section-title" data-i18n="weatherTabTitle">Location Weather & Suitability Calculator</h2>
-                <p class="section-desc">Search any city or state in India to compute real-time weather and check if conditions are suitable for your target crop.</p>
+                <p class="section-desc">Search any city or state in India to compute real-time weather and check if
+                    conditions are suitable for your target crop.</p>
             </div>
 
             <!-- Location & Crop Weather Search Form -->
@@ -729,7 +882,8 @@
                 <div style="display: grid; grid-template-columns: 1.5fr 1.2fr auto; gap: 16px; align-items: flex-end;">
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">📍 Enter Location / City / District</label>
-                        <input type="text" id="weatherLocationInput" class="form-control" placeholder="e.g. Mandya, Bengaluru, Guntur, Pune, Lucknow, Patna..." value="Mandya">
+                        <input type="text" id="weatherLocationInput" class="form-control"
+                            placeholder="e.g. Mandya, Bengaluru, Guntur, Pune, Lucknow, Patna..." value="Mandya">
                     </div>
 
                     <div class="form-group" style="margin: 0;">
@@ -750,7 +904,8 @@
 
                     <div style="display: flex; gap: 10px;">
                         <button class="btn btn-primary" id="fetchWeatherBtn">🔍 Calculate Weather & Suitability</button>
-                        <button class="btn btn-outline" id="gpsWeatherBtn" title="Use My Device Location">🎯 GPS</button>
+                        <button class="btn btn-outline" id="gpsWeatherBtn" title="Use My Device Location">🎯
+                            GPS</button>
                     </div>
                 </div>
             </div>
@@ -758,23 +913,33 @@
             <!-- Weather & Suitability Result Card -->
             <div id="weatherSuitabilityResultBox">
                 <div class="glass-card" style="padding: 32px; margin-bottom: 32px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                         <div>
-                            <span style="color: var(--primary); font-weight: 700;" id="weatherLocLabel">LOCATION: MANDYA, KARNATAKA</span>
+                            <span style="color: var(--primary); font-weight: 700;" id="weatherLocLabel">LOCATION:
+                                MANDYA, KARNATAKA</span>
                             <h1 style="font-size: 3.5rem; margin: 6px 0;" id="weatherTempText">29.2°C</h1>
-                            <p style="color: var(--text-muted-light);" id="weatherSubText">Humidity: 68% | Rainfall: 18.5mm | Wind 12 km/h | UV Index 7</p>
+                            <p style="color: var(--text-muted-light);" id="weatherSubText">Humidity: 68% | Rainfall:
+                                18.5mm | Wind 12 km/h | UV Index 7</p>
                         </div>
-                        
-                        <div id="suitabilityBadgeBox" style="background: #e8f5e9; border-left: 6px solid #2e7d32; padding: 20px; border-radius: 14px; max-width: 480px; flex:1;">
-                            <span class="severity-pill severity-LOW" id="suitabilityBadgeTag">🟢 SUITABLE (Prime Farming Weather)</span>
-                            <h3 style="color: #2e7d32; margin: 8px 0;" id="suitabilityScoreTitle">Climate Suitability Score: 90%</h3>
-                            <p style="font-size: 0.9rem; color: var(--text-dark);" id="suitabilityActionPlan">Weather conditions in Mandya are optimal for Tomato cultivation, sowing, and foliar spraying.</p>
+
+                        <div id="suitabilityBadgeBox"
+                            style="background: #e8f5e9; border-left: 6px solid #2e7d32; padding: 20px; border-radius: 14px; max-width: 480px; flex:1;">
+                            <span class="severity-pill severity-LOW" id="suitabilityBadgeTag">🟢 SUITABLE (Prime Farming
+                                Weather)</span>
+                            <h3 style="color: #2e7d32; margin: 8px 0;" id="suitabilityScoreTitle">Climate Suitability
+                                Score: 90%</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-dark);" id="suitabilityActionPlan">Weather
+                                conditions in Mandya are optimal for Tomato cultivation, sowing, and foliar spraying.
+                            </p>
                         </div>
                     </div>
 
                     <!-- Suitability Rationale List -->
-                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);" id="suitabilityReasonsContainer">
-                        <h4 style="color: var(--primary); margin-bottom: 10px;">💡 Weather Rationale & Advisory Breakdown</h4>
+                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);"
+                        id="suitabilityReasonsContainer">
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">💡 Weather Rationale & Advisory
+                            Breakdown</h4>
                         <ul style="padding-left: 20px; font-size: 0.95rem;" id="suitabilityReasonsList">
                             <li>Temperature 29.2°C is within the prime growth zone for Tomato.</li>
                             <li>Relative humidity (68%) is safe and favorable.</li>
@@ -788,68 +953,99 @@
             <div class="dashboard-grid">
                 <div class="glass-card col-12" style="padding: 24px;">
                     <h3 style="color: var(--primary); margin-bottom: 20px;">7-Day Location Forecast Timeline</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; text-align: center;" id="forecastTimelineGrid">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; text-align: center;"
+                        id="forecastTimelineGrid">
                         <div style="background: var(--primary-light); padding: 16px; border-radius: 12px;">
-                            <strong>Today</strong><br><span style="font-size:2rem;">⛅</span><br><strong>29°C</strong><br><span style="font-size:0.8rem;">Rain 18.5mm</span>
+                            <strong>Today</strong><br><span
+                                style="font-size:2rem;">⛅</span><br><strong>29°C</strong><br><span
+                                style="font-size:0.8rem;">Rain 18.5mm</span>
                         </div>
                         <div style="background: var(--primary-light); padding: 16px; border-radius: 12px;">
-                            <strong>Sat</strong><br><span style="font-size:2rem;">☀️</span><br><strong>30°C</strong><br><span style="font-size:0.8rem;">Rain 5mm</span>
+                            <strong>Sat</strong><br><span
+                                style="font-size:2rem;">☀️</span><br><strong>30°C</strong><br><span
+                                style="font-size:0.8rem;">Rain 5mm</span>
                         </div>
                         <div style="background: #ffebee; padding: 16px; border-radius: 12px;">
-                            <strong style="color:#c62828;">Sun</strong><br><span style="font-size:2rem;">🌧️</span><br><strong>28°C</strong><br><span style="font-size:0.8rem; color:#c62828;">Rain 25mm</span>
+                            <strong style="color:#c62828;">Mon</strong><br><span
+                                style="font-size:2rem;">⛈️</span><br><strong>27°C</strong><br><span
+                                style="font-size:0.8rem; color:#c62828;">Rain 35mm</span>
                         </div>
-                        <div style="background: #ffebee; padding: 16px; border-radius: 12px;">
-                            <strong style="color:#c62828;">Mon</strong><br><span style="font-size:2rem;">⛈️</span><br><strong>27°C</strong><br><span style="font-size:0.8rem; color:#c62828;">Rain 35mm</span>
+                        <div style="background: var(--primary-light); padding: 16px; border-radius: 12px;">
+                            <strong>Tue</strong><br><span
+                                style="font-size:2rem;">⛅</span><br><strong>29°C</strong><br><span
+                                style="font-size:0.8rem;">Rain 10mm</span>
                         </div>
-                        <div style="background: var(--primary-light); padding: 16px; bor        <!-- TAB 6: MARKET PRICES -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: MARKET PRICES -->
         <section id="market-tab" class="tab-content">
             <div class="section-header">
                 <div class="section-tag" data-i18n="marketTabTag">📈 APMC Mandi Intelligence</div>
                 <h2 class="section-title" data-i18n="marketTabTitle">Live Crop & Produce Market Prices</h2>
-                <p class="section-desc">Select any crop or produce to view live APMC Mandi prices nearest to your GPS location.</p>
+                <p class="section-desc">Select any crop or vegetable to view live APMC Mandi rates auto-updated
+                    according to your live GPS location!</p>
             </div>
 
             <!-- Interactive Commodity & Location Selector Card -->
-            <div class="glass-card" style="padding: 24px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(46,125,50,0.06), rgba(255,193,7,0.08));">
+            <div class="glass-card"
+                style="padding: 24px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(46,125,50,0.06), rgba(255,193,7,0.08));">
                 <h3 style="color: var(--primary); margin-bottom: 10px; font-size: 1.25rem;">
-                    🔍 Step 1: Select Crop / Product & Mandi Location
+                    🔍 Select Vegetable / Crop & APMC Mandi Location
                 </h3>
                 <p style="font-size: 0.9rem; color: var(--text-muted-light); margin-bottom: 16px;">
-                    Choose the fruit, vegetable, cereal, or commercial produce you want to check. Local prices are auto-updated according to your live GPS location!
+                    Daily Mandi rates auto-update according to live date and your high-precision GPS location. Select
+                    any vegetable or commodity below!
                 </p>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
                     <div>
-                        <label class="form-label" style="font-weight: 700; color: var(--primary);">🌾 Select Product / Commodity</label>
-                        <select id="marketCropSelect" class="form-control" style="font-weight: 700; border: 2px solid var(--primary);" onchange="fetchMarketPricesForSelectedCrop()">
-                            <option value="Tomato" selected>🍅 Tomato (टमाटर / ಟೊಮ್ಯಾಟೊ)</option>
+                        <label class="form-label" style="font-weight: 700; color: var(--primary);">🌾 Select Vegetable /
+                            Commodity</label>
+                        <select id="marketCropSelect" class="form-control"
+                            style="font-weight: 700; border: 2px solid var(--primary);"
+                            onchange="fetchMarketPricesForSelectedCrop()">
+                            <option value="All" selected>🌟 All Daily Vegetables & Produce (सभी सब्जियां)</option>
+                            <option value="Tomato">🍅 Tomato (टमाटर / ಟೊಮ್ಯಾಟೊ)</option>
                             <option value="Potato">🥔 Potato (आलू / ಆಲೂಗಡ್ಡೆ)</option>
                             <option value="Onion">🧅 Onion (प्याज / ಈರುಳ್ಳಿ)</option>
                             <option value="Brinjal">🍆 Brinjal (बैंगन / ಬದನೇಕಾಯಿ)</option>
                             <option value="Okra">🫛 Okra / Lady Finger (भिंडी / ಬೆಂಡೆಕಾಯಿ)</option>
-                            <option value="Mango">🥭 Mango (आम / ಮಾವು)</option>
-                            <option value="Banana">🍌 Banana (केला / ಬಾಳೆಹಣ್ಣು)</option>
-                            <option value="Apple">🍎 Apple (सेब / ಸೇಬು)</option>
-                            <option value="Papaya">🍈 Papaya (पपीता / ಪಪಾಯಿ)</option>
-                            <option value="Orange">🍊 Orange (संतरा / ಕಿತ್ತಳೆ)</option>
-                            <option value="Grapes">🍇 Grapes (अंगूर / ದ್ರಾಕ್ಷಿ)</option>
-                            <option value="Pomegranate">🍎 Pomegranate (अनार / ದಾಳಿಂಬೆ)</option>
+                            <option value="Cabbage">🥬 Cabbage (पत्तागोभी / ಕೋಸು)</option>
+                            <option value="Cauliflower">🥦 Cauliflower (फूलगोभी / ಹೂಕೋಸು)</option>
+                            <option value="Carrot">🥕 Carrot (गाजर / ಕ್ಯಾರೆಟ್)</option>
+                            <option value="Cucumber">🥒 Cucumber (खीरा / ಸೌತೆಕಾಯಿ)</option>
+                            <option value="Capsicum">🫑 Capsicum (शिमला मिर्च / ದೊಣ್ಣೆ ಮೆಣಸಿನಕಾಯಿ)</option>
+                            <option value="Green Pea">🫛 Green Pea (मटर / ಬಟಾಣಿ)</option>
+                            <option value="French Beans">🫘 French Beans (फली / ಬೀನ್ಸ್)</option>
                             <option value="Garlic">🧄 Garlic (लहसुन / ಬೆಳ್ಳುಳ್ಳಿ)</option>
                             <option value="Ginger">🫚 Ginger (अदरक / ಶುಂಠಿ)</option>
-                            <option value="Chilli">🌶️ Dry Red Chilli (लाल मिर्च / ಮೆಣಸಿನಕಾಯಿ)</option>
+                            <option value="Green Chilli">🌶️ Green Chilli (हरी मिर्च / ಹಸಿ ಮೆಣಸಿನಕಾಯಿ)</option>
                             <option value="Turmeric">🫚 Turmeric (हल्दी / ಅರಿಶಿನ)</option>
+                            <option value="Spinach">🍃 Spinach (पालक / ಪಾಲಕ್)</option>
+                            <option value="Bitter Gourd">🍈 Bitter Gourd / Karela (करेला / ಹಾಗಲಕಾಯಿ)</option>
+                            <option value="Bottle Gourd">🍈 Bottle Gourd / Lauki (लौकी / ಸೋರೆಕಾಯಿ)</option>
+                            <option value="Radish">🪴 Radish (मूली / ಮೂಲಂಗಿ)</option>
                             <option value="Rice">🌾 Rice / Paddy (धान / ಭತ್ತ)</option>
                             <option value="Wheat">🌾 Wheat (गेहूं / ಗೋಧಿ)</option>
                             <option value="Cotton">🧵 Cotton (कपास / ಹತ್ತಿ)</option>
                             <option value="Maize">🌽 Maize / Corn (मक्का / ಮೆಕ್ಕೆಜೋಳ)</option>
                             <option value="Groundnut">🥜 Groundnut (मूंगफली / ಕಡಲೆಕಾಯಿ)</option>
                             <option value="Soybean">🫘 Soybean (सोयाबीन)</option>
+                            <option value="Mango">🥭 Mango (आम / ಮಾவு)</option>
+                            <option value="Banana">🍌 Banana (केला / ಬಾಳೆಹಣ್ಣು)</option>
+                            <option value="Apple">🍎 Apple (सेब / ಸೇಬು)</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="form-label" style="font-weight: 700;">📍 Select Location / State APMC Mandi</label>
-                        <select id="marketLocationSelect" class="form-control" style="font-weight: 700;" onchange="fetchMarketPricesForSelectedCrop()">
+                        <label class="form-label" style="font-weight: 700;">📍 Select Location / State APMC
+                            Mandi</label>
+                        <select id="marketLocationSelect" class="form-control" style="font-weight: 700;"
+                            onchange="fetchMarketPricesForSelectedCrop()">
                             <option value="GPS_AUTO" selected>📍 Auto-Detect Nearest Mandi via GPS</option>
                             <option value="Karnataka">Karnataka (Kolar, Mandya, Bangalore, Davangere Mandis)</option>
                             <option value="Maharashtra">Maharashtra (Lasalgaon, Pune, Nashik Mandis)</option>
@@ -862,9 +1058,9 @@
                     </div>
 
                     <div style="display: flex; align-items: flex-end;">
-                        <button class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 700;" onclick="fetchMarketPricesForSelectedCrop()">
-                            🔍 Fetch Local APMC Prices
-                        </button>
+                        <button class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 700;"
+                            onclick="fetchMarketPricesForSelectedCrop()">
+                            🔄 Refresh Daily APMC Rates
                     </div>
                 </div>
             </div>
@@ -876,15 +1072,21 @@
 
             <div class="dashboard-grid">
                 <div class="glass-card col-8" style="padding: 24px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;" id="marketChartTitle">Price Trend Analysis (Selected APMC Mandi)</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;" id="marketChartTitle">Price Trend Analysis
+                        (Selected APMC Mandi)</h3>
                     <canvas id="marketPriceChart" height="130"></canvas>
                 </div>
 
-                <div class="glass-card col-4" style="padding: 24px; background: linear-gradient(135deg, rgba(46,125,50,0.15) 0%, rgba(255,193,7,0.15) 100%);">
+                <div class="glass-card col-4"
+                    style="padding: 24px; background: linear-gradient(135deg, rgba(46,125,50,0.15) 0%, rgba(255,193,7,0.15) 100%);">
                     <h3 style="color: var(--primary); margin-bottom: 12px;">💡 AI Best Sell Advice</h3>
                     <h2 style="color: var(--primary);" id="aiSellDayText">Sell on Thursday</h2>
-                    <p style="font-size: 0.95rem; margin: 12px 0;" id="aiSellDescText">Market demand is surging due to reduced supply from neighboring districts. Predicted price peak: <strong>₹2,900 / quintal</strong>.</p>
-                    <button class="btn btn-accent" style="width: 100%; margin-top: 10px;" onclick="showToast('🔔 Price Alert Set! You will be notified when local Mandi price peaks.')">🔔 Set Price Alert</button>
+                    <p style="font-size: 0.95rem; margin: 12px 0;" id="aiSellDescText">Market demand is surging due to
+                        reduced supply from neighboring districts. Predicted price peak: <strong>₹2,900 /
+                            quintal</strong>.</p>
+                    <button class="btn btn-accent" style="width: 100%; margin-top: 10px;"
+                        onclick="showToast('🔔 Price Alert Set! You will be notified when local Mandi price peaks.')">🔔
+                        Set Price Alert</button>
                 </div>
             </div>
         </section>
@@ -900,17 +1102,22 @@
                 <div class="glass-card col-6" style="padding: 24px;">
                     <span class="section-tag">Direct Benefit</span>
                     <h3 style="color: var(--primary); margin: 8px 0;">PM-KISAN Samman Nidhi</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted-light); margin-bottom: 12px;">₹6,000 annual direct benefit transfer in 3 equal installments to landholding farmers.</p>
-                    <p><strong>Eligibility:</strong> Small & Marginal farmers owning cultivable land up to 2 hectares.</p>
-                    <a href="https://pmkisan.gov.in" target="_blank" class="btn btn-primary" style="margin-top: 16px;">🔗 Apply Now</a>
+                    <p style="font-size: 0.9rem; color: var(--text-muted-light); margin-bottom: 12px;">₹6,000 annual
+                        direct benefit transfer in 3 equal installments to landholding farmers.</p>
+                    <p><strong>Eligibility:</strong> Small & Marginal farmers owning cultivable land up to 2 hectares.
+                    </p>
+                    <a href="https://pmkisan.gov.in" target="_blank" class="btn btn-primary"
+                        style="margin-top: 16px;">🔗 Apply Now</a>
                 </div>
 
                 <div class="glass-card col-6" style="padding: 24px;">
                     <span class="section-tag">Crop Insurance</span>
                     <h3 style="color: var(--primary); margin: 8px 0;">Pradhan Mantri Fasal Bima Yojana (PMFBY)</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted-light); margin-bottom: 12px;">Comprehensive insurance against crop damage due to natural disasters, heavy rain, or pests.</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted-light); margin-bottom: 12px;">Comprehensive
+                        insurance against crop damage due to natural disasters, heavy rain, or pests.</p>
                     <p><strong>Premium Rate:</strong> Only 1.5% for Rabi and 2% for Kharif crops.</p>
-                    <a href="https://pmfby.gov.in" target="_blank" class="btn btn-primary" style="margin-top: 16px;">🔗 Apply Now</a>
+                    <a href="https://pmfby.gov.in" target="_blank" class="btn btn-primary" style="margin-top: 16px;">🔗
+                        Apply Now</a>
                 </div>
             </div>
         </section>
@@ -928,11 +1135,13 @@
                         <span style="font-size: 3.5rem;">👨‍🔬</span>
                         <div>
                             <h3 style="color: var(--primary);">Dr. Ananya Sharma</h3>
-                            <p style="color: var(--text-muted-light); font-size: 0.9rem;">Ph.D. Plant Pathology (ICAR-IARI)</p>
+                            <p style="color: var(--text-muted-light); font-size: 0.9rem;">Ph.D. Plant Pathology
+                                (ICAR-IARI)</p>
                             <span class="severity-pill severity-LOW">Rating: 4.9 ★ (120 Consultations)</span>
                         </div>
                     </div>
-                    <p style="margin: 16px 0; font-size: 0.9rem;">Specializes in early blight control, bio-pesticide formulations, and organic crop defense.</p>
+                    <p style="margin: 16px 0; font-size: 0.9rem;">Specializes in early blight control, bio-pesticide
+                        formulations, and organic crop defense.</p>
                     <button class="btn btn-accent" style="width: 100%;">📹 Schedule Free Video Consultation</button>
                 </div>
             </div>
@@ -942,26 +1151,34 @@
         <section id="map-tab" class="tab-content">
             <div class="section-header">
                 <div class="section-tag" data-i18n="mapTabTag">🗺️ Nearby Resources & GPS Locator</div>
-                <h2 class="section-title" data-i18n="mapTabTitle">Agri Store, Plant Hospital & Diagnostic Lab Locator</h2>
-                <p class="section-desc">Powered by AgriGuard Maps API to locate nearby agrochemical depots, diagnostic labs, and APMC markets.</p>
+                <h2 class="section-title" data-i18n="mapTabTitle">Agri Store, Plant Hospital & Diagnostic Lab Locator
+                </h2>
+                <p class="section-desc">Powered by AgriGuard Maps API to locate nearby agrochemical depots, diagnostic
+                    labs, and APMC markets.</p>
             </div>
 
             <!-- Map Control & Filter Bar -->
-            <div class="glass-card" style="padding: 20px; margin-bottom: 20px; background: linear-gradient(135deg, rgba(46,125,50,0.06), rgba(2,136,209,0.08));">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
+            <div class="glass-card"
+                style="padding: 20px; margin-bottom: 20px; background: linear-gradient(135deg, rgba(46,125,50,0.06), rgba(2,136,209,0.08));">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 1.2rem;">🔑</span>
                         <div>
                             <strong style="color: var(--primary); font-size: 0.95rem;">Map API Key Active:</strong>
-                            <code style="background: rgba(46,125,50,0.12); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.82rem;">hxunbdfpjlgznhqtszbtnzlebujjuuunnyhj</code>
+                            <code
+                                style="background: rgba(46,125,50,0.12); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.82rem;">hxunbdfpjlgznhqtszbtnzlebujjuuunnyhj</code>
                         </div>
                     </div>
 
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="locateUserOnMap()" style="padding: 8px 16px; font-size: 0.9rem;">
+                        <button class="btn btn-primary" onclick="locateUserOnMap()"
+                            style="padding: 8px 16px; font-size: 0.9rem;">
                             🎯 Find Stores Near My Live GPS
                         </button>
-                        <select id="mapTypeSelect" class="form-control" style="width: auto; padding: 8px 12px; font-weight: 600;" onchange="switchMapLayer(this.value)">
+                        <select id="mapTypeSelect" class="form-control"
+                            style="width: auto; padding: 8px 12px; font-weight: 600;"
+                            onchange="switchMapLayer(this.value)">
                             <option value="vector" selected>🗺️ Street Map</option>
                             <option value="satellite">🛰️ Satellite View</option>
                             <option value="terrain">⛰️ Terrain View</option>
@@ -971,16 +1188,20 @@
 
                 <!-- Facility Category Filter Chips -->
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class="chat-chip active-chip" id="filterAllShops" onclick="filterMapShops('ALL')" style="background: var(--primary); color: white; border: none; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer;">
+                    <button class="chat-chip active-chip" id="filterAllShops" onclick="filterMapShops('ALL')"
+                        style="background: var(--primary); color: white; border: none; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer;">
                         🏢 All Facilities
                     </button>
-                    <button class="chat-chip" id="filterStores" onclick="filterMapShops('SHOP')" style="background: var(--card-bg-light); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-dark);">
+                    <button class="chat-chip" id="filterStores" onclick="filterMapShops('SHOP')"
+                        style="background: var(--card-bg-light); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-dark);">
                         🏪 Agrochemical & Fertilizer Stores
                     </button>
-                    <button class="chat-chip" id="filterLabs" onclick="filterMapShops('HOSPITAL')" style="background: var(--card-bg-light); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-dark);">
+                    <button class="chat-chip" id="filterLabs" onclick="filterMapShops('HOSPITAL')"
+                        style="background: var(--card-bg-light); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-dark);">
                         🏥 KVK Plant Hospitals & Labs
                     </button>
-                    <button class="chat-chip" id="filterMarkets" onclick="filterMapShops('MARKET')" style="background: var(--card-bg-light); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-dark);">
+                    <button class="chat-chip" id="filterMarkets" onclick="filterMapShops('MARKET')"
+                        style="background: var(--card-bg-light); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-dark);">
                         🌾 APMC Mandis & Markets
                     </button>
                 </div>
@@ -1006,9 +1227,11 @@
     </main>
 
     <!-- Floating Scan FAB (+) Button with Camera & Gallery Options -->
-    <div id="scanFabContainer" style="position:fixed; bottom:105px; right:28px; z-index:10000; display:flex; flex-direction:column; align-items:flex-end; gap:0;">
+    <div id="scanFabContainer"
+        style="position:fixed; bottom:105px; right:28px; z-index:10000; display:flex; flex-direction:column; align-items:flex-end; gap:0;">
         <!-- Expandable Options (hidden by default) -->
-        <div id="scanFabMenu" style="display:none; flex-direction:column; align-items:flex-end; gap:10px; margin-bottom:14px; animation: scanFabSlideUp 0.3s ease;">
+        <div id="scanFabMenu"
+            style="display:none; flex-direction:column; align-items:flex-end; gap:10px; margin-bottom:14px; animation: scanFabSlideUp 0.3s ease;">
             <!-- Camera Option -->
             <div class="scan-fab-option" onclick="openScanCamera()" title="Open Camera">
                 <span class="scan-fab-option-label">📷 Camera</span>
@@ -1035,27 +1258,42 @@
 
 
     <!-- AI Chatbot Modal Drawer -->
-    <div id="chatbotModal" style="display:none; position:fixed; bottom:100px; right:28px; width:420px; max-width:calc(100vw - 36px); height:540px; z-index:10001; flex-direction:column;" class="glass-card">
-        <div style="background:linear-gradient(135deg, var(--primary), var(--primary-hover)); color:white; padding:16px; border-radius:16px 16px 0 0; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+    <div id="chatbotModal"
+        style="display:none; position:fixed; bottom:100px; right:28px; width:420px; max-width:calc(100vw - 36px); height:540px; z-index:10001; flex-direction:column;"
+        class="glass-card">
+        <div
+            style="background:linear-gradient(135deg, var(--primary), var(--primary-hover)); color:white; padding:16px; border-radius:16px 16px 0 0; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
             <div>
                 <strong style="font-size:1.05rem;">🤖 AgriGuard AI Disease & Solution Assistant</strong>
                 <p style="font-size:0.75rem; opacity:0.9; margin:0;">24/7 Crop Recommendations & Remedies</p>
             </div>
-            <button id="closeChatbot" style="background:none; border:none; color:white; font-size:1.4rem; cursor:pointer;">✕</button>
+            <button id="closeChatbot"
+                style="background:none; border:none; color:white; font-size:1.4rem; cursor:pointer;">✕</button>
         </div>
 
         <!-- Quick Solution Recommendation Chips -->
-        <div style="padding:10px 14px; background:var(--primary-light); border-bottom:1px solid var(--border-color); display:flex; gap:8px; overflow-x:auto; white-space:nowrap; scrollbar-width:thin;">
-            <button class="chat-chip" onclick="sendChatbotQuery('Organic solutions for leaf disease')" style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">🧪 Organic Solutions</button>
-            <button class="chat-chip" onclick="sendChatbotQuery('Chemical fungicide spray and dosage')" style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">💊 Chemical Spray Dosage</button>
-            <button class="chat-chip" onclick="sendChatbotQuery('How to cure Tomato Late Blight')" style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">🌾 Tomato Blight Solution</button>
-            <button class="chat-chip" onclick="sendChatbotQuery('Weather spray safety rule')" style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">🌤️ Weather Spray Advice</button>
+        <div
+            style="padding:10px 14px; background:var(--primary-light); border-bottom:1px solid var(--border-color); display:flex; gap:8px; overflow-x:auto; white-space:nowrap; scrollbar-width:thin;">
+            <button class="chat-chip" onclick="sendChatbotQuery('Organic solutions for leaf disease')"
+                style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">🧪
+                Organic Solutions</button>
+            <button class="chat-chip" onclick="sendChatbotQuery('Chemical fungicide spray and dosage')"
+                style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">💊
+                Chemical Spray Dosage</button>
+            <button class="chat-chip" onclick="sendChatbotQuery('How to cure Tomato Late Blight')"
+                style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">🌾
+                Tomato Blight Solution</button>
+            <button class="chat-chip" onclick="sendChatbotQuery('Weather spray safety rule')"
+                style="background:var(--card-bg-light); border:1px solid var(--border-color); padding:4px 12px; border-radius:16px; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--primary);">🌤️
+                Weather Spray Advice</button>
         </div>
 
         <div id="chatMessages" style="flex:1; padding:16px; overflow-y:auto; font-size:0.9rem;">
-            <div style="background:var(--primary-light); padding:12px 16px; border-radius:16px; margin-bottom:12px; border-left:4px solid var(--primary);">
+            <div
+                style="background:var(--primary-light); padding:12px 16px; border-radius:16px; margin-bottom:12px; border-left:4px solid var(--primary);">
                 <strong>🌿 Welcome to AgriGuard AI Assistant!</strong><br>
-                Ask me for organic remedies, chemical fungicide dosages, crop disease solutions, or weather spray advice!
+                Ask me for organic remedies, chemical fungicide dosages, crop disease solutions, or weather spray
+                advice!
             </div>
         </div>
 
@@ -1070,10 +1308,10 @@
     <div id="cameraModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); z-index:10002; align-items:center; justify-content:center; padding:20px;">
         <div class="glass-card" style="width:100%; max-width:560px; padding:24px; text-align:center; position:relative; background:var(--card-bg-light);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h3 style="color:var(--primary); margin:0;">📷 Live AI Crop & Disease Scanner</h3>
+                <h3 style="color:var(--primary); margin:0;">📷 Live AI Crop &amp; Disease Scanner</h3>
                 <button id="closeCameraModal" style="background:none; border:none; font-size:1.5rem; color:var(--text-dark); cursor:pointer;">✕</button>
             </div>
-            
+
             <div style="position:relative; width:100%; border-radius:16px; overflow:hidden; border:3px solid var(--primary); background:#000;">
                 <video id="cameraVideo" autoplay playsinline style="width:100%; height:320px; object-fit:cover; display:block;"></video>
                 <!-- Reticle Overlay -->
@@ -1085,8 +1323,88 @@
             <canvas id="cameraCanvas" style="display:none;"></canvas>
 
             <div style="display:flex; gap:12px; margin-top:20px;">
-                <button class="btn btn-accent" id="snapAndDetectBtn" style="flex:1; padding:14px; font-size:1.05rem;">📸 Snap Photo & Instantly Detect</button>
+                <button class="btn btn-accent" id="snapAndDetectBtn" style="flex:1; padding:14px; font-size:1.05rem;">📸 Snap Photo &amp; Instantly Detect</button>
                 <button class="btn btn-secondary" id="closeCameraModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- APK / PWA Install Guide Modal                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div id="installGuideModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); align-items:center; justify-content:center;">
+        <div style="background:var(--surface); border-radius:24px; padding:32px; max-width:480px; width:92%; max-height:85vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,0.35); position:relative;">
+            <button onclick="document.getElementById('installGuideModal').style.display='none'" style="position:absolute; top:16px; right:16px; background:var(--border); border:none; border-radius:50%; width:36px; height:36px; font-size:1.1rem; cursor:pointer; color:var(--text-dark);">✕</button>
+            <div style="text-align:center; margin-bottom:24px;">
+                <div style="font-size:3rem; margin-bottom:8px;">📲</div>
+                <h2 style="font-size:1.4rem; font-weight:900; color:var(--primary); margin:0 0 6px 0;">Install AgriGuard AI</h2>
+                <p style="color:var(--text-muted-light); font-size:0.9rem; margin:0;">Install the app on your phone for the best farming experience — works offline too!</p>
+            </div>
+
+            <!-- Step-by-step guide tabs -->
+            <div style="display:flex; gap:8px; margin-bottom:20px; background:var(--bg); border-radius:14px; padding:4px;">
+                <button onclick="showInstallTab('android')" id="androidTab" style="flex:1; padding:10px; border-radius:10px; border:none; background:var(--primary); color:#fff; font-weight:800; font-size:0.88rem; cursor:pointer;">🤖 Android</button>
+                <button onclick="showInstallTab('pwa')" id="pwaTab" style="flex:1; padding:10px; border-radius:10px; border:none; background:transparent; color:var(--text-muted-light); font-weight:700; font-size:0.88rem; cursor:pointer;">🌐 Browser (PWA)</button>
+                <button onclick="showInstallTab('ios')" id="iosTab" style="flex:1; padding:10px; border-radius:10px; border:none; background:transparent; color:var(--text-muted-light); font-weight:700; font-size:0.88rem; cursor:pointer;">🍎 iOS</button>
+            </div>
+
+            <!-- Android APK Guide -->
+            <div id="installTab-android">
+                <div style="background: linear-gradient(135deg,#e8f5e9,#f1f8e9); border-radius:16px; padding:20px; margin-bottom:16px;">
+                    <div style="font-weight:800; color:#1b5e20; margin-bottom:14px; font-size:0.95rem;">📋 Steps to Install Android APK:</div>
+                    <ol style="padding-left:20px; color:var(--text-dark); font-size:0.9rem; line-height:1.9; margin:0;">
+                        <li>Tap <strong>"Download APK"</strong> button below</li>
+                        <li>Go to your phone's <strong>Downloads folder</strong></li>
+                        <li>Tap <strong>AgriGuard-AI-v2.4.apk</strong> to open it</li>
+                        <li>If asked, tap <strong>"Allow from this source"</strong> in Settings</li>
+                        <li>Tap <strong>"Install"</strong> and wait for it to finish</li>
+                        <li>Open <strong>AgriGuard AI</strong> from your home screen! 🎉</li>
+                    </ol>
+                </div>
+                <div style="background:#fff3e0; border-radius:12px; padding:12px 16px; font-size:0.82rem; color:#e65100; font-weight:600; margin-bottom:16px;">
+                    ⚠️ <strong>Note:</strong> You may need to enable "Install unknown apps" in Android Settings → Security. This is safe — AgriGuard AI is a trusted farming app.
+                </div>
+                <a href="/download/apk/" download="AgriGuard-AI-v2.4.apk" style="display:block; text-align:center; background:linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; padding:16px; border-radius:16px; font-weight:900; font-size:1rem; text-decoration:none; box-shadow:0 6px 20px rgba(46,125,50,0.4);">
+                    ⬇️ Download AgriGuard AI APK (Android)
+                </a>
+                <div style="text-align:center; margin-top:10px; font-size:0.78rem; color:var(--text-muted-light);">v2.4 · Free · No subscription needed</div>
+            </div>
+
+            <!-- PWA Browser Guide -->
+            <div id="installTab-pwa" style="display:none;">
+                <div style="background: linear-gradient(135deg,#e3f2fd,#e8f5e9); border-radius:16px; padding:20px; margin-bottom:16px;">
+                    <div style="font-weight:800; color:#1565c0; margin-bottom:14px; font-size:0.95rem;">🌐 Install via Browser (Chrome / Edge):</div>
+                    <ol style="padding-left:20px; color:var(--text-dark); font-size:0.9rem; line-height:1.9; margin:0;">
+                        <li>Open <strong>AgriGuard AI</strong> in Chrome browser</li>
+                        <li>Look for the <strong>"Install" icon</strong> (➕) in the address bar</li>
+                        <li>Or tap the <strong>⋮ menu → "Add to Home Screen"</strong></li>
+                        <li>Tap <strong>"Install"</strong> in the popup</li>
+                        <li>The app will appear on your home screen like a native app! 🎉</li>
+                    </ol>
+                </div>
+                <button id="pwaInstallBtnModal" onclick="triggerPwaInstall()" style="display:none; width:100%; background:linear-gradient(135deg,#1565c0,#1976d2); color:#fff; border:none; padding:16px; border-radius:16px; font-weight:900; font-size:1rem; cursor:pointer; box-shadow:0 6px 20px rgba(21,101,192,0.4);">
+                    📱 Install App Now (PWA)
+                </button>
+                <div id="pwaNoteBox" style="background:#e3f2fd; border-radius:12px; padding:12px 16px; font-size:0.85rem; color:#1565c0; font-weight:600; text-align:center;">
+                    Open this page in <strong>Chrome</strong> or <strong>Edge</strong> to see the Install button automatically.
+                </div>
+            </div>
+
+            <!-- iOS Guide -->
+            <div id="installTab-ios" style="display:none;">
+                <div style="background: linear-gradient(135deg,#fce4ec,#fff3e0); border-radius:16px; padding:20px; margin-bottom:16px;">
+                    <div style="font-weight:800; color:#880e4f; margin-bottom:14px; font-size:0.95rem;">🍎 Install on iPhone / iPad (iOS Safari):</div>
+                    <ol style="padding-left:20px; color:var(--text-dark); font-size:0.9rem; line-height:1.9; margin:0;">
+                        <li>Open <strong>AgriGuard AI</strong> in <strong>Safari</strong> browser</li>
+                        <li>Tap the <strong>Share button</strong> (□ with ↑ arrow) at the bottom</li>
+                        <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+                        <li>Tap <strong>"Add"</strong> in the top-right corner</li>
+                        <li>Open <strong>AgriGuard AI</strong> from your home screen! 🎉</li>
+                    </ol>
+                </div>
+                <div style="background:#fce4ec; border-radius:12px; padding:12px 16px; font-size:0.82rem; color:#880e4f; font-weight:600;">
+                    ℹ️ iOS does not support APK downloads. Use the "Add to Home Screen" method via Safari for the best app-like experience.
+                </div>
             </div>
         </div>
     </div>
@@ -1097,7 +1415,12 @@
             <div class="footer-grid">
                 <div>
                     <div class="footer-logo">🌿 AgriGuard <span>AI</span></div>
-                    <p style="color:#a0aec0; font-size:0.95rem;">Empowering smallholder & commercial farmers with modern AI diagnostics and precision farming tools.</p>
+                    <p style="color:#a0aec0; font-size:0.95rem;">Empowering smallholder &amp; commercial farmers with modern AI diagnostics and precision farming tools.</p>
+                    <!-- Download App Pill in footer -->
+                    <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                        <a href="/download/apk/" download="AgriGuard-AI-v2.4.apk" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; padding:10px 16px; border-radius:12px; font-size:0.82rem; font-weight:800; text-decoration:none; box-shadow:0 4px 12px rgba(46,125,50,0.35);">🤖 Download APK <span style="background:#ff6f00; padding:1px 6px; border-radius:6px; font-size:0.7rem;">Android</span></a>
+                        <button onclick="showInstallGuideModal()" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); color:#a0aec0; border:1.5px solid rgba(255,255,255,0.15); padding:10px 14px; border-radius:12px; font-size:0.82rem; font-weight:700; cursor:pointer;">📲 Install Guide</button>
+                    </div>
                 </div>
                 <div>
                     <h4 class="footer-title">Platform Features</h4>
@@ -1109,7 +1432,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="footer-title">Government & Support</h4>
+                    <h4 class="footer-title">Government &amp; Support</h4>
                     <ul class="footer-links">
                         <li><a onclick="switchTab('schemes-tab')">PM-KISAN Scheme</a></li>
                         <li><a onclick="switchTab('schemes-tab')">PMFBY Insurance</a></li>
@@ -1157,5 +1480,5 @@
 
     <script src="/static/js/app.js"></script>
 </body>
-</html>
 
+</html>

@@ -1185,56 +1185,212 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- Responsive Media Queries for Mobile & Tablet --- */
-@media screen and (max-width: 992px) {
+/* --- Comprehensive Responsive Media Queries for Desktop, Tablet & Mobile --- */
+
+/* Tablet Specific Breakpoints (601px - 1024px: iPads, Galaxy Tabs, Surface Go, Kindle Fire) */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
     .container {
-        padding: 0 16px;
+        padding: 0 24px;
+        max-width: 100%;
     }
-    
+
+    /* Tablet Navbar & Navigation */
     .navbar {
         height: auto;
-        padding: 10px 0;
+        min-height: 72px;
+        padding: 12px 0;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
     }
-    
+
     .logo {
-        font-size: 1.3rem;
+        font-size: 1.45rem;
     }
-    
+
     .nav-links {
         display: flex !important;
         overflow-x: auto !important;
         white-space: nowrap !important;
         width: 100% !important;
-        padding: 6px 0 !important;
-        gap: 8px !important;
+        padding: 8px 2px !important;
+        gap: 10px !important;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
     }
-    
+
     .nav-links::-webkit-scrollbar {
         display: none;
     }
 
     .nav-link {
-        padding: 6px 12px;
-        font-size: 0.88rem;
+        padding: 8px 16px;
+        font-size: 0.92rem;
         background: var(--primary-light);
         border-radius: 20px;
         flex-shrink: 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
 
     .nav-actions {
-        gap: 8px;
+        gap: 10px;
     }
 
-    .lang-select {
-        padding: 6px 8px;
-        font-size: 0.8rem;
+    .lang-select, .theme-toggle {
+        padding: 8px 12px;
+        font-size: 0.88rem;
+        min-height: 44px;
+    }
+
+    /* Tablet Hero Section */
+    .hero {
+        padding: 44px 0 32px;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 32px !important;
+        align-items: center;
+    }
+
+    .hero-title {
+        font-size: 2.5rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1.05rem !important;
+        margin-bottom: 24px !important;
+    }
+
+    .hero-card-preview {
+        max-width: 100% !important;
+    }
+
+    /* Tablet Stats & Features Grids */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .stat-card {
+        padding: 22px 14px !important;
+    }
+
+    .stat-number {
+        font-size: 2.1rem !important;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    .process-flow {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    /* Tablet 2-Column Dashboard System */
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: repeat(12, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    .col-12 { grid-column: span 12 !important; }
+    .col-8 { grid-column: span 12 !important; }
+    .col-6 { grid-column: span 6 !important; }
+    .col-4 { grid-column: span 12 !important; }
+
+    /* AI Scanner Studio on Tablet */
+    .scanner-container {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 24px !important;
+    }
+
+    /* Market Prices Grid on Tablet */
+    #marketPriceResultsBox > div {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    /* Weather Search & Forecast on Tablet */
+    .weather-search-bar {
+        grid-template-columns: 1fr 1fr auto !important;
+        gap: 12px !important;
+    }
+
+    #forecastTimelineGrid {
+        grid-template-columns: repeat(7, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    /* Soil Diagnostic Calculator on Tablet */
+    .soil-inputs-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    /* Store Map Locator on Tablet */
+    #agriShopMap {
+        height: 420px !important;
+    }
+
+    /* Floating Chatbot & Modals on Tablet */
+    #chatbotModal {
+        width: 440px !important;
+        right: 24px !important;
+        bottom: 90px !important;
+        height: 70vh !important;
+        max-height: 600px !important;
+        border-radius: 20px !important;
+    }
+
+    .chatbot-fab {
+        bottom: 28px !important;
+        right: 28px !important;
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 1.7rem !important;
+    }
+
+    #scanFabContainer {
+        bottom: 100px !important;
+        right: 28px !important;
+    }
+
+    #authModal .glass-card,
+    #cameraModal .glass-card {
+        width: min(88%, 560px) !important;
+        padding: 28px !important;
+        border-radius: 20px !important;
+    }
+
+    /* Tablet Touch Target Sizes */
+    button, select, input, .btn {
+        min-height: 44px;
+        font-size: 0.95rem;
     }
 }
 
-@media screen and (max-width: 768px) {
+/* Tablet Landscape Orientation Enhancements (768px - 1024px landscape) */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .col-8 { grid-column: span 7 !important; }
+    .col-4 { grid-column: span 5 !important; }
+
+    .hero-title {
+        font-size: 2.7rem !important;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* Mobile Devices Breakpoint (<= 600px) */
+@media screen and (max-width: 600px) {
     body {
         padding-bottom: 74px; /* Clearance for mobile bottom navigation bar */
     }
@@ -1248,6 +1404,10 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 16px !important;
     }
 
+    .container {
+        padding: 0 14px;
+    }
+
     /* Stack multi-column desktop grids on mobile */
     .scanner-grid,
     .dashboard-grid,
@@ -1257,9 +1417,25 @@ h1, h2, h3, h4, h5, h6 {
     .soil-grid,
     .footer-grid,
     .expert-grid,
-    .map-grid {
+    .map-grid,
+    .hero-grid,
+    .scanner-container {
         grid-template-columns: 1fr !important;
         gap: 16px !important;
+    }
+
+    .col-12, .col-8, .col-6, .col-4 {
+        grid-column: span 12 !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    #forecastTimelineGrid {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important;
+        gap: 8px !important;
     }
 
     /* Adjust FAB floating buttons above mobile bottom bar */
@@ -1346,12 +1522,6 @@ h1, h2, h3, h4, h5, h6 {
 
     .hero-subtitle {
         font-size: 0.95rem !important;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .container {
-        padding: 0 12px;
     }
 
     .btn {

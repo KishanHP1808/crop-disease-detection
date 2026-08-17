@@ -571,48 +571,86 @@ function initTheme() {
 
 // --- Geolocation Permission & Entrance Live Location ---
 function requestUserLocation() {
-    requestEntranceLocationPermission();
+    return requestEntranceLocationPermission();
 }
 
-function requestEntranceLocationPermission() {
-    if (navigator.geolocation) {
-        showToast('🌐 Accessing GPS satellite location for weather, climate & soil analysis...');
-        navigator.geolocation.getCurrentPosition(
-            async (pos) => {
-                const lat = pos.coords.latitude;
-                const lng = pos.coords.longitude;
-                localStorage.setItem('agriguard_lat', lat.toString());
-                localStorage.setItem('agriguard_lng', lng.toString());
-                
-                await fetchAndDisplayEntranceEnvironment(lat, lng);
-                showToast(`✅ Location granted! Synced weather, humidity & soil diagnostics.`);
-            },
-            async (err) => {
-                console.warn('Location permission denied or error:', err.message);
-                showToast('⚠️ Location access not granted. Using default regional weather & soil diagnostics.');
-                const defaultLat = 12.9716;
-                const defaultLng = 77.5946;
-                localStorage.setItem('agriguard_lat', defaultLat.toString());
-                localStorage.setItem('agriguard_lng', defaultLng.toString());
-                await fetchAndDisplayEntranceEnvironment(defaultLat, defaultLng);
-            },
-            { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-        );
-    } else {
-        const defaultLat = 12.9716;
-        const defaultLng = 77.5946;
-        localStorage.setItem('agriguard_lat', defaultLat.toString());
-        localStorage.setItem('agriguard_lng', defaultLng.toString());
-        fetchAndDisplayEntranceEnvironment(defaultLat, defaultLng);
+async function requestEntranceLocationPermission() {
+    showToast('🌐 Accessing GPS satellite location for weather, climate & soil analysis...');
+    
+    const onLocationFound = async (lat, lng, locNameHint = null) => {
+        localStorage.setItem('agriguard_lat', lat.toString());
+        localStorage.setItem('agriguard_lng', lng.toString());
+        
+        let finalLocName = locNameHint;
+        if (!finalLocName) {
+            finalLocName = await reverseGeocodeCoordinates(lat, lng);
+        }
+        localStorage.setItem('agriguard_location_name', finalLocName);
+        await fetchAndDisplayEntranceEnvironment(lat, lng, finalLocName);
+        showToast(`✅ Location synced: ${finalLocName}`);
+    };
+
+    const fallbackToIpLocation = async () => {
+        try {
+            const ipRes = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client');
+            const ipData = await ipRes.json();
+            const lat = ipData.latitude || 12.9716;
+            const lng = ipData.longitude || 77.5946;
+            const city = ipData.city || ipData.locality || ipData.principalSubdivision || 'Your Location';
+            const state = ipData.principalSubdivision || '';
+            const locName = state ? `${city}, ${state}` : city;
+            await onLocationFound(lat, lng, locName);
+        } catch (e) {
+            const defaultLat = 12.9716;
+            const defaultLng = 77.5946;
+            await onLocationFound(defaultLat, defaultLng, 'Mandya, Karnataka');
+        }
+    };
+
+    return new Promise((resolve) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    await onLocationFound(pos.coords.latitude, pos.coords.longitude);
+                    resolve();
+                },
+                async (err) => {
+                    console.warn('GPS location fallback triggered:', err.message);
+                    await fallbackToIpLocation();
+                    resolve();
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+            );
+        } else {
+            fallbackToIpLocation().then(resolve);
+        }
+    });
+}
+
+async function reverseGeocodeCoordinates(lat, lng) {
+    try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`, {
+            headers: { 'Accept-Language': 'en' }
+        });
+        const data = await res.json();
+        const addr = data.address || {};
+        const city = addr.city || addr.town || addr.village || addr.suburb || addr.county || addr.state_district || '';
+        const state = addr.state || addr.country || '';
+        if (city && state) return `${city}, ${state}`;
+        if (city) return city;
+        if (state) return state;
+        return data.display_name ? data.display_name.split(',')[0] : `${parseFloat(lat).toFixed(2)}°, ${parseFloat(lng).toFixed(2)}°`;
+    } catch (e) {
+        return `${parseFloat(lat).toFixed(2)}° N, ${parseFloat(lng).toFixed(2)}° E`;
     }
 }
 
-async function fetchAndDisplayEntranceEnvironment(lat, lng) {
+async function fetchAndDisplayEntranceEnvironment(lat, lng, overrideLocName = null) {
     try {
         const res = await fetch(`/api/v1/weather/?lat=${lat}&lng=${lng}`);
         const data = await res.json();
         
-        const locName = data.location_name || 'Mandya, Karnataka';
+        const locName = overrideLocName || data.location_name || localStorage.getItem('agriguard_location_name') || 'Your Location';
         localStorage.setItem('agriguard_location_name', locName);
 
         const titleElem = document.getElementById('bannerLocationTitle');
@@ -625,9 +663,9 @@ async function fetchAndDisplayEntranceEnvironment(lat, lng) {
         if (weatherElem) weatherElem.innerHTML = `🌡️ ${data.temp_c}°C &nbsp;|&nbsp; 💧 Humidity: ${data.humidity}% &nbsp;|&nbsp; 🌧️ Rain: ${data.rainfall_mm}mm`;
 
         let soilType = 'Black Cotton Soil (Vertisol)';
-        if (lat > 20.0) soilType = 'Alluvial Fertile Loam';
-        else if (lat < 10.5) soilType = 'Coastal Laterite Soil';
-        else if (lng > 80.0) soilType = 'Red Sandy Loam';
+        if (parseFloat(lat) > 20.0) soilType = 'Alluvial Fertile Loam';
+        else if (parseFloat(lat) < 10.5) soilType = 'Coastal Laterite Soil';
+        else if (parseFloat(lng) > 80.0) soilType = 'Red Sandy Loam';
 
         localStorage.setItem('agriguard_soil_type', soilType);
         if (soilElem) soilElem.innerHTML = `🪨 Soil: ${soilType}`;
@@ -993,6 +1031,15 @@ function switchTab(tabId) {
     if (activeTab) {
         activeTab.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Auto-open and refresh live data for the active tab
+    if (tabId === 'market-tab') {
+        fetchMarketPricesForSelectedCrop();
+    } else if (tabId === 'map-tab') {
+        setTimeout(() => { if (typeof initMap === 'function') initMap(); }, 150);
+    } else if (tabId === 'weather-tab') {
+        if (typeof initWeatherSuitabilityCalculator === 'function') initWeatherSuitabilityCalculator();
     }
 
     // Automatically translate all elements inside the newly opened tab/drawer
@@ -2214,7 +2261,13 @@ async function fetchAnalyticsData() {
     } catch (e) { console.log('Analytics loaded'); }
 }
 
-async function fetchMarketPricesForSelectedCrop() {
+let currentVegCategoryFilter = 'All';
+
+async function fetchMarketPricesForSelectedCrop(categoryOverride = null) {
+    if (categoryOverride !== null) {
+        currentVegCategoryFilter = categoryOverride;
+    }
+
     const cropSelect = document.getElementById('marketCropSelect');
     const locSelect = document.getElementById('marketLocationSelect');
     const priceBox = document.getElementById('marketPriceResultsBox');
@@ -2229,52 +2282,115 @@ async function fetchMarketPricesForSelectedCrop() {
     const userLng = localStorage.getItem('agriguard_lng') || '77.5946';
 
     try {
-        const url = `/api/v1/market-prices/?crop_name=${encodeURIComponent(crop)}&location=${encodeURIComponent(location)}&lat=${userLat}&lng=${userLng}`;
+        let url = `/api/v1/market-prices/?crop_name=${encodeURIComponent(crop)}&location=${encodeURIComponent(location)}&lat=${userLat}&lng=${userLng}`;
+        if (currentVegCategoryFilter && currentVegCategoryFilter !== 'All') {
+            url += `&category=${encodeURIComponent(currentVegCategoryFilter)}`;
+        }
+
         const res = await fetch(url);
         const data = await res.json();
 
         const prices = data.results || data;
+        const lastUpdated = data.last_updated_date || 'Today (Live APMC Daily Feed)';
 
-        if (chartTitle) chartTitle.textContent = `Price Trend Analysis (${crop} Local APMC Mandis)`;
+        if (chartTitle) chartTitle.textContent = `Price Trend Analysis (${crop} & Daily APMC Mandis)`;
 
-        if (priceBox && prices && prices.length > 0) {
-            priceBox.innerHTML = `
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-                    ${prices.map(p => `
-                        <div class="glass-card" style="padding: 20px; border-left: 6px solid var(--primary);">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                <span style="font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase;">
-                                    📍 ${p.state || 'Karnataka'} APMC
-                                </span>
-                                <span style="font-size: 0.78rem; background: rgba(46,125,50,0.12); color: #2E7D32; padding: 2px 10px; border-radius: 12px; font-weight: 700;">
-                                    ${p.distance_km || 'Local Mandi'}
-                                </span>
-                            </div>
-                            <h3 style="font-size: 1.2rem; margin-bottom: 4px; color: var(--text-dark);">${p.market_name}</h3>
-                            <div style="display: flex; align-items: baseline; gap: 8px; margin: 10px 0;">
-                                <h2 style="font-size: 2.1rem; color: var(--primary); font-weight: 800; margin: 0;">₹${p.price_per_quintal}</h2>
-                                <span style="font-size: 0.85rem; color: var(--text-muted-light);">/ quintal</span>
-                                <span style="font-size: 0.85rem; font-weight: 700; color: ${p.price_change_pct >= 0 ? '#2E7D32' : '#d32f2f'}; background: ${p.price_change_pct >= 0 ? 'rgba(46,125,50,0.1)' : 'rgba(211,47,47,0.1)'}; padding: 2px 8px; border-radius: 10px;">
-                                    ${p.price_change_pct >= 0 ? '▲ +' : '▼ '}${p.price_change_pct}%
-                                </span>
-                            </div>
-                            <p style="font-size: 0.85rem; color: var(--text-muted-light); margin: 0;">
-                                📊 Demand: <strong>${p.demand_level || 'HIGH'}</strong> &nbsp;|&nbsp; 🗓️ Peak Day: <strong>${p.best_sell_day || 'Thursday'}</strong>
-                            </p>
-                        </div>
-                    `).join('')}
+        if (priceBox) {
+            if (!prices || prices.length === 0) {
+                priceBox.innerHTML = `<div class="glass-card" style="padding: 24px; text-align: center; color: var(--text-muted-light);">No APMC market records found for the selected category. Try clearing filters or selecting another product.</div>`;
+                return;
+            }
+
+            const categories = ['All', 'Solanaceous', 'Tubers', 'Spices', 'Greens', 'Gourds', 'Cereals'];
+            const filterPillsHtml = `
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary);">🥦 Category Filter:</span>
+                        ${categories.map(cat => `
+                            <button onclick="fetchMarketPricesForSelectedCrop('${cat}')" style="background: ${currentVegCategoryFilter === cat ? 'var(--primary)' : 'rgba(46,125,50,0.1)'}; color: ${currentVegCategoryFilter === cat ? 'white' : 'var(--primary)'}; border: none; padding: 5px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;">
+                                ${cat === 'All' ? '🌟 All Vegetables' : cat}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div style="font-size: 0.8rem; background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 12px; font-weight: 700; border: 1px solid #a5d6a7;">
+                        📅 ${lastUpdated}
+                    </div>
                 </div>
             `;
 
+            const cardsHtml = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+                    ${prices.map(p => {
+                        const isUp = p.price_change_pct >= 0;
+                        const icon = p.icon_emoji || '🌾';
+                        const local = p.local_name ? ` (${p.local_name})` : '';
+                        const priceKg = p.price_per_kg ? `₹${p.price_per_kg}/kg` : `₹${(p.price_per_quintal / 100).toFixed(1)}/kg`;
+                        const retailMin = p.suggested_retail_min || (p.price_per_kg * 1.2).toFixed(1);
+                        const retailMax = p.suggested_retail_max || (p.price_per_kg * 1.35).toFixed(1);
+                        const arrival = p.arrival_tonnes ? `${p.arrival_tonnes} Tonnes` : '32 Tonnes';
+                        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.market_name || 'APMC Mandi')}`;
+
+                        return `
+                            <div class="glass-card" style="padding: 20px; border-left: 6px solid ${isUp ? '#2E7D32' : '#d32f2f'}; position: relative; transition: transform 0.2s ease;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                    <div>
+                                        <span style="font-size: 0.78rem; font-weight: 800; color: var(--primary); text-transform: uppercase;">
+                                            📍 ${p.state || 'Nearest Regional'} APMC Mandi / Dealer
+                                        </span>
+                                        <h3 style="font-size: 1.2rem; margin: 2px 0 0 0; color: var(--text-dark);">
+                                            ${icon} ${p.crop_name}<span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted-light);">${local}</span>
+                                        </h3>
+                                    </div>
+                                    <span style="font-size: 0.75rem; background: rgba(46,125,50,0.12); color: #2E7D32; padding: 4px 10px; border-radius: 12px; font-weight: 700;">
+                                        📍 ${p.distance_km || '1.8 km (Nearest Market)'}
+                                    </span>
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-muted-light); margin-bottom: 10px; line-height: 1.3;">🏬 <strong>Dealer/Yard:</strong> ${p.market_name}</p>
+                                
+                                <div style="display: flex; align-items: baseline; justify-content: space-between; margin: 10px 0; background: rgba(46,125,50,0.06); padding: 12px; border-radius: 12px; border: 1px solid rgba(46,125,50,0.12);">
+                                    <div>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted-light); font-weight: 700; text-transform: uppercase;">Wholesale Rate (Mandi)</span>
+                                        <h2 style="font-size: 1.8rem; color: var(--primary); font-weight: 800; margin: 2px 0 0 0;">₹${p.price_per_quintal} <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted-light);">/ quintal</span></h2>
+                                        <div style="font-size: 0.88rem; font-weight: 800; color: #1b5e20;">⚡ Wholesale: ${priceKg}</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span style="font-size: 0.85rem; font-weight: 800; color: ${isUp ? '#2E7D32' : '#d32f2f'}; background: ${isUp ? 'rgba(46,125,50,0.12)' : 'rgba(211,47,47,0.12)'}; padding: 4px 10px; border-radius: 12px; display: inline-block;">
+                                            ${isUp ? '▲ +' : '▼ '}${p.price_change_pct}% Today
+                                        </span>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted-light); margin-top: 3px;">Prev: ₹${p.prev_price}</div>
+                                    </div>
+                                </div>
+
+                                <div style="background: rgba(255, 193, 7, 0.08); padding: 10px 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid rgba(255, 193, 7, 0.2);">
+                                    <div style="font-size: 0.78rem; color: #f57f17; font-weight: 800;">🛒 Farmer Direct Retail Range:</div>
+                                    <div style="font-size: 0.95rem; font-weight: 800; color: var(--text-dark);">₹${retailMin} - ₹${retailMax} / kg <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-muted-light);">(Suggested Direct Selling)</span></div>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-muted-light); margin-bottom: 12px;">
+                                    <span>📦 Arrival: <strong style="color:var(--text-dark);">${arrival}</strong></span>
+                                    <span>🗓️ Peak Sell: <strong style="color:#e65100;">${p.best_sell_day || 'Thursday'}</strong></span>
+                                </div>
+
+                                <a href="${mapsUrl}" target="_blank" class="btn btn-outline" style="width: 100%; padding: 8px; font-size: 0.82rem; font-weight: 700; text-align: center; display: block; text-decoration: none;">
+                                    🗺️ Directions to Nearest Mandi / Dealer
+                                </a>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+
+            priceBox.innerHTML = filterPillsHtml + cardsHtml;
+
             // Update AI Sell Advice Box
             const topPrice = prices[0];
-            if (aiSellDayText) aiSellDayText.textContent = `Sell ${crop} on ${topPrice.best_sell_day || 'Thursday'}`;
-            if (aiSellDescText) aiSellDescText.innerHTML = `Market demand for <strong>${crop}</strong> at <strong>${topPrice.market_name}</strong> is surging. Predicted peak price: <strong>₹${Math.round(topPrice.price_per_quintal * 1.08)} / quintal</strong>.`;
+            if (aiSellDayText) aiSellDayText.textContent = `Sell ${topPrice.crop_name} on ${topPrice.best_sell_day || 'Thursday'}`;
+            if (aiSellDescText) aiSellDescText.innerHTML = `Daily market demand for <strong>${topPrice.crop_name}</strong> at <strong>${topPrice.market_name}</strong> is updated today. Predicted peak price: <strong>₹${Math.round(topPrice.price_per_quintal * 1.08)} / quintal (₹${((topPrice.price_per_quintal * 1.08) / 100).toFixed(1)}/kg)</strong>. Suggested Farmer Direct Retail: <strong>₹${topPrice.suggested_retail_min || (topPrice.price_per_kg * 1.2).toFixed(1)} - ₹${topPrice.suggested_retail_max || (topPrice.price_per_kg * 1.35).toFixed(1)}/kg</strong>.`;
 
             // Update Chart with price history for this crop
             if (window.marketChartInstance) {
                 const baseVal = topPrice.price_per_quintal;
-                window.marketChartInstance.data.datasets[0].label = `${crop} Price (₹/qtl)`;
+                window.marketChartInstance.data.datasets[0].label = `${topPrice.crop_name} Daily Price (₹/qtl)`;
                 window.marketChartInstance.data.datasets[0].data = [
                     Math.round(baseVal * 0.91), Math.round(baseVal * 0.94), Math.round(baseVal * 0.93),
                     Math.round(baseVal * 0.96), Math.round(baseVal * 0.98), baseVal
@@ -2298,12 +2414,86 @@ async function fetchSchemes() {
     } catch (e) {}
 }
 
-// --- PWA Service Worker ---
+// ─── PWA Install & Service Worker ────────────────────────────────────────────
+let _pwaInstallPrompt = null;
+
 function initPWA() {
+    // Register service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg error', err));
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('[AgriGuard PWA] SW registered, scope:', reg.scope))
+            .catch(err => console.warn('[AgriGuard PWA] SW registration error:', err));
+    }
+
+    // Capture the browser's native "Add to Home Screen" prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        _pwaInstallPrompt = e;
+
+        // Show the "Install App" buttons in hero banner and modal
+        const heroBtn = document.getElementById('pwaInstallBtn');
+        const modalBtn = document.getElementById('pwaInstallBtnModal');
+        const noteBox  = document.getElementById('pwaNoteBox');
+
+        if (heroBtn) { heroBtn.style.display = 'inline-flex'; }
+        if (modalBtn) { modalBtn.style.display = 'block'; }
+        if (noteBox)  { noteBox.style.display  = 'none'; }
+
+        console.log('[AgriGuard PWA] Install prompt captured — showing install buttons.');
+    });
+
+    // Track successful installation
+    window.addEventListener('appinstalled', () => {
+        _pwaInstallPrompt = null;
+        console.log('[AgriGuard PWA] App installed successfully!');
+        const heroBtn = document.getElementById('pwaInstallBtn');
+        if (heroBtn) heroBtn.style.display = 'none';
+        showToast('🎉 AgriGuard AI installed on your device!', 'success');
+    });
+}
+
+/** Trigger the native PWA install prompt */
+async function triggerPwaInstall() {
+    if (!_pwaInstallPrompt) {
+        // If prompt not available, fall back to guide modal
+        showInstallGuideModal();
+        return;
+    }
+    _pwaInstallPrompt.prompt();
+    const { outcome } = await _pwaInstallPrompt.userChoice;
+    console.log('[AgriGuard PWA] Install prompt outcome:', outcome);
+    _pwaInstallPrompt = null;
+}
+
+/** Open the "How to Install" guide modal */
+function showInstallGuideModal() {
+    const modal = document.getElementById('installGuideModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        showInstallTab('android'); // default to Android tab
     }
 }
+
+/** Switch between Android / PWA / iOS install guide tabs */
+function showInstallTab(tab) {
+    ['android', 'pwa', 'ios'].forEach(t => {
+        const panel = document.getElementById(`installTab-${t}`);
+        const btn   = document.getElementById(`${t}Tab`);
+        if (panel) panel.style.display = t === tab ? 'block' : 'none';
+        if (btn) {
+            btn.style.background = t === tab ? 'var(--primary)' : 'transparent';
+            btn.style.color = t === tab ? '#fff' : 'var(--text-muted-light)';
+        }
+    });
+    // Show PWA install button if prompt is available
+    if (tab === 'pwa') {
+        const modalBtn = document.getElementById('pwaInstallBtnModal');
+        const noteBox  = document.getElementById('pwaNoteBox');
+        if (modalBtn) modalBtn.style.display = _pwaInstallPrompt ? 'block' : 'none';
+        if (noteBox)  noteBox.style.display  = _pwaInstallPrompt ? 'none' : 'block';
+    }
+}
+
 
 // --- Floating Scan FAB (+) Button Logic ---
 let scanFabOpen = false;

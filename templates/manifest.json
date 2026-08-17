@@ -1,11 +1,15 @@
 {
-  "name": "AgriGuard AI Smart Farming Platform",
+  "name": "AgriGuard AI – Smart Farming Platform",
   "short_name": "AgriGuard AI",
+  "description": "AI-powered crop disease detection, soil diagnostics, real-time weather forecasts, daily APMC Mandi prices, and government scheme assistance for farmers.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#F8FAF5",
+  "orientation": "any",
+  "background_color": "#F0F7EF",
   "theme_color": "#2E7D32",
-  "description": "AI-powered crop disease detection, soil diagnostics, real-time weather forecasts, and market prices.",
+  "lang": "en-IN",
+  "categories": ["agriculture", "utilities", "productivity"],
   "icons": [
     {
       "src": "/static/images/icon-192.png",
@@ -19,5 +23,42 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "AI Disease Detection",
+      "short_name": "AI Scan",
+      "description": "Instantly scan your crop for diseases using AI",
+      "url": "/?tab=scanner-tab",
+      "icons": [{ "src": "/static/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mandi Market Prices",
+      "short_name": "Market",
+      "description": "Check today's APMC Mandi vegetable prices",
+      "url": "/?tab=market-tab",
+      "icons": [{ "src": "/static/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Soil Health Test",
+      "short_name": "Soil",
+      "description": "Analyse soil NPK & pH for your farm",
+      "url": "/?tab=soil-tab",
+      "icons": [{ "src": "/static/images/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Weather Forecast",
+      "short_name": "Weather",
+      "description": "Real-time local weather and farming suitability",
+      "url": "/?tab=weather-tab",
+      "icons": [{ "src": "/static/images/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "/"
+    }
+  ],
+  "prefer_related_applications": false
 }
