@@ -558,16 +558,40 @@ class DetectDiseaseView(APIView):
 
     def _determine_regional_soil(self, lat, lng, loc_name):
         loc_lower = (loc_name or '').lower()
+        try:
+            lat_val = float(lat) if lat else 0.0
+            lng_val = float(lng) if lng else 0.0
+        except ValueError:
+            lat_val = 0.0
+            lng_val = 0.0
+
+        # International soil mappings
+        if 'usa' in loc_lower or 'united states' in loc_lower or (-125 < lng_val < -65 and 24 < lat_val < 49):
+            return 'Mollisols / Prairie Loam (Fertile Organic Soil)'
+        elif 'nepal' in loc_lower or 'kathmandu' in loc_lower or (80 < lng_val < 89 and 26 < lat_val < 31):
+            return 'Mountainous Forest Soil'
+        elif 'bangladesh' in loc_lower or (88 < lng_val < 93 and 20 < lat_val < 27):
+            return 'Ganges Deltaic Silt Loam'
+        elif 'sri lanka' in loc_lower or (79 < lng_val < 82 and 5 < lat_val < 10):
+            return 'Reddish Brown Coastal Earth'
+        elif 'australia' in loc_lower or (113 < lng_val < 154 and -44 < lat_val < -10):
+            return 'Aridisols / Red Desert Soil'
+        elif 'uk' in loc_lower or 'united kingdom' in loc_lower or 'europe' in loc_lower or (-10 < lng_val < 30 and 35 < lat_val < 65):
+            return 'Alfisols / Brown Forest Clay-Loam'
+
+        # India-specific regional soils
         if any(k in loc_lower for k in ['punjab', 'haryana', 'up', 'uttar pradesh', 'bihar', 'bengal', 'delhi', 'ganga']):
             return 'Alluvial Fertile Loam'
-        elif any(k in loc_lower for k in ['maharashtra', 'gujarat', 'mp', 'madhya pradesh', 'deccan']):
-            return 'Black Cotton Soil (Vertisol)'
-        elif any(k in loc_lower for k in ['kerala', 'goa', 'coastal', 'konkan']):
-            return 'Coastal Laterite Soil'
-        elif any(k in loc_lower for k in ['rajasthan', 'kutch']):
+        elif any(k in loc_lower for k in ['rajasthan', 'thar', 'kutch', 'desert']) or (68 < lng_val < 75 and 22 < lat_val < 30):
             return 'Desert Arid Sand'
-        else:
-            return 'Red Sandy Loam'
+        elif any(k in loc_lower for k in ['maharashtra', 'gujarat', 'mp', 'madhya pradesh', 'deccan']) or (72 < lng_val < 81 and 15 < lat_val < 24):
+            return 'Black Cotton Soil (Vertisol)'
+        elif any(k in loc_lower for k in ['kerala', 'goa', 'coastal', 'konkan']) or (72 < lng_val < 78 and 8 < lat_val < 15):
+            return 'Coastal Laterite Soil'
+        elif any(k in loc_lower for k in ['kashmir', 'ladakh', 'himachal', 'uttarakhand']) or lat_val > 31.0:
+            return 'Mountain Peaty Soil'
+            
+        return 'Red Sandy Loam'
 
     def _get_soil_ph(self, soil_type):
         if 'Laterite' in soil_type: return 5.5
@@ -1057,7 +1081,7 @@ class WeatherView(APIView):
         try:
             import urllib.request, json, urllib.parse
             q = urllib.parse.quote(city_name)
-            url = f"https://nominatim.openstreetmap.org/search?q={q}&format=json&limit=1&addressdetails=1&countrycodes=in"
+            url = f"https://nominatim.openstreetmap.org/search?q={q}&format=json&limit=1&addressdetails=1"
             req = urllib.request.Request(url, headers={'User-Agent': 'AgriGuardAI/2.0 (farming app)'})
             with urllib.request.urlopen(req, timeout=4) as resp:
                 results = json.loads(resp.read().decode('utf-8'))

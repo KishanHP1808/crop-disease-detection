@@ -645,6 +645,51 @@ async function reverseGeocodeCoordinates(lat, lng) {
     }
 }
 
+function getRegionalSoilType(lat, lng, locName) {
+    const latNum = parseFloat(lat);
+    const lngNum = parseFloat(lng);
+    const locLower = (locName || '').toLowerCase();
+
+    // Check international locations first
+    if (locLower.includes('usa') || locLower.includes('united states') || (lngNum > -125 && lngNum < -65 && latNum > 24 && latNum < 49)) {
+        return 'Mollisols / Prairie Loam (Fertile Organic Soil)';
+    }
+    if (locLower.includes('nepal') || locLower.includes('kathmandu') || (lngNum > 80 && lngNum < 89 && latNum > 26 && latNum < 31)) {
+        return 'Mountainous Forest Soil';
+    }
+    if (locLower.includes('bangladesh') || (lngNum > 88 && lngNum < 93 && latNum > 20 && latNum < 27)) {
+        return 'Ganges Deltaic Silt Loam';
+    }
+    if (locLower.includes('sri lanka') || (lngNum > 79 && lngNum < 82 && latNum > 5 && latNum < 10)) {
+        return 'Reddish Brown Coastal Earth';
+    }
+    if (locLower.includes('australia') || (lngNum > 113 && lngNum < 154 && latNum > -44 && latNum < -10)) {
+        return 'Aridisols / Red Desert Soil';
+    }
+    if (locLower.includes('uk') || locLower.includes('united kingdom') || locLower.includes('europe') || (lngNum > -10 && lngNum < 30 && latNum > 35 && latNum < 65)) {
+        return 'Alfisols / Brown Forest Clay-Loam';
+    }
+
+    // India specific regional soils
+    if (locLower.includes('punjab') || locLower.includes('haryana') || locLower.includes('uttar pradesh') || locLower.includes('bihar') || locLower.includes('bengal') || locLower.includes('delhi') || locLower.includes('ganga') || locLower.includes('up')) {
+        return 'Alluvial Fertile Loam';
+    }
+    if (locLower.includes('rajasthan') || locLower.includes('thar') || locLower.includes('kutch') || locLower.includes('desert') || (lngNum > 68 && lngNum < 75 && latNum > 22 && latNum < 30)) {
+        return 'Desert Arid Sand';
+    }
+    if (locLower.includes('maharashtra') || locLower.includes('gujarat') || locLower.includes('madhya pradesh') || locLower.includes('mp') || locLower.includes('deccan') || (lngNum > 72 && lngNum < 81 && latNum > 15 && latNum < 24)) {
+        return 'Black Cotton Soil (Vertisol)';
+    }
+    if (locLower.includes('kerala') || locLower.includes('goa') || locLower.includes('coastal') || locLower.includes('konkan') || (lngNum > 72 && lngNum < 78 && latNum > 8 && latNum < 15)) {
+        return 'Coastal Laterite Soil';
+    }
+    if (locLower.includes('kashmir') || locLower.includes('ladakh') || locLower.includes('himachal') || locLower.includes('uttarakhand') || latNum > 31.0) {
+        return 'Mountain Peaty Soil';
+    }
+
+    return 'Red Sandy Loam';
+}
+
 async function fetchAndDisplayEntranceEnvironment(lat, lng, overrideLocName = null) {
     try {
         const res = await fetch(`/api/v1/weather/?lat=${lat}&lng=${lng}`);
@@ -662,10 +707,7 @@ async function fetchAndDisplayEntranceEnvironment(lat, lng, overrideLocName = nu
         if (coordElem) coordElem.textContent = `(${parseFloat(lat).toFixed(4)}° N, ${parseFloat(lng).toFixed(4)}° E)`;
         if (weatherElem) weatherElem.innerHTML = `🌡️ ${data.temp_c}°C &nbsp;|&nbsp; 💧 Humidity: ${data.humidity}% &nbsp;|&nbsp; 🌧️ Rain: ${data.rainfall_mm}mm`;
 
-        let soilType = 'Black Cotton Soil (Vertisol)';
-        if (parseFloat(lat) > 20.0) soilType = 'Alluvial Fertile Loam';
-        else if (parseFloat(lat) < 10.5) soilType = 'Coastal Laterite Soil';
-        else if (parseFloat(lng) > 80.0) soilType = 'Red Sandy Loam';
+        let soilType = getRegionalSoilType(lat, lng, locName);
 
         localStorage.setItem('agriguard_soil_type', soilType);
         if (soilElem) soilElem.innerHTML = `🪨 Soil: ${soilType}`;
@@ -1052,69 +1094,72 @@ let uploadedFile = null;
 let currentCameraStream = null;
 
 // --- Camera & Device Media Permissions Manager ---
-function requestDevicePermission(type) {
-    return new Promise((resolve) => {
-        const modal = document.getElementById('cameraMediaPermissionModal');
-        const icon = document.getElementById('permModalIcon');
-        const title = document.getElementById('permModalTitle');
-        const desc = document.getElementById('permModalDesc');
-        const allowBtn = document.getElementById('permModalAllowBtn');
-        const denyBtn = document.getElementById('permModalDenyBtn');
+function requestDevicePermission(type, onAllow) {
+    const modal = document.getElementById('cameraMediaPermissionModal');
+    const icon = document.getElementById('permModalIcon');
+    const title = document.getElementById('permModalTitle');
+    const desc = document.getElementById('permModalDesc');
+    const allowBtn = document.getElementById('permModalAllowBtn');
+    const denyBtn = document.getElementById('permModalDenyBtn');
 
-        if (!modal) {
-            const msg = type === 'camera' 
-                ? '📷 AgriGuard AI requires permission to access your device camera to click photos of crop leaves. Allow camera access?'
-                : '📁 AgriGuard AI requires permission to access your device media gallery and file storage to select crop photos. Allow media access?';
-            resolve(confirm(msg));
-            return;
+    if (!modal) {
+        const msg = type === 'camera' 
+            ? '📷 AgriGuard AI requires permission to access your device camera to click photos of crop leaves. Allow camera access?'
+            : '📁 AgriGuard AI requires permission to access your device media gallery and file storage to select crop photos. Allow media access?';
+        if (confirm(msg)) {
+            if (onAllow) onAllow();
         }
+        return;
+    }
 
-        if (type === 'camera') {
-            if (icon) icon.textContent = '📷';
-            if (title) title.textContent = 'Camera Access Permission';
-            if (desc) desc.innerHTML = 'AgriGuard AI requires permission to access your device <strong>Camera</strong> to snap clear photos of infected crop leaves for instant AI diagnosis.';
-        } else {
-            if (icon) icon.textContent = '📁';
-            if (title) title.textContent = 'Media & Gallery Access Permission';
-            if (desc) desc.innerHTML = 'AgriGuard AI requires permission to access your device <strong>Photo Gallery & Media Storage</strong> to pick existing crop photos from your device.';
-        }
+    if (type === 'camera') {
+        if (icon) icon.textContent = '📷';
+        if (title) title.textContent = 'Camera Access Permission';
+        if (desc) desc.innerHTML = 'AgriGuard AI requires permission to access your device <strong>Camera</strong> to snap clear photos of infected crop leaves for instant AI diagnosis.';
+    } else {
+        if (icon) icon.textContent = '📁';
+        if (title) title.textContent = 'Media & Gallery Access Permission';
+        if (desc) desc.innerHTML = 'AgriGuard AI requires permission to access your device <strong>Photo Gallery & Media Storage</strong> to pick existing crop photos from your device.';
+    }
 
-        modal.style.display = 'flex';
+    modal.style.display = 'flex';
 
-        const cleanup = () => {
-            modal.style.display = 'none';
-            if (allowBtn) allowBtn.onclick = null;
-            if (denyBtn) denyBtn.onclick = null;
-        };
+    const cleanup = () => {
+        modal.style.display = 'none';
+        if (allowBtn) allowBtn.onclick = null;
+        if (denyBtn) denyBtn.onclick = null;
+    };
 
-        if (allowBtn) {
-            allowBtn.onclick = async () => {
-                cleanup();
-                if (type === 'camera') {
-                    try {
+    if (allowBtn) {
+        allowBtn.onclick = async () => {
+            cleanup();
+            if (type === 'camera') {
+                try {
+                    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         const testStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
                         testStream.getTracks().forEach(t => t.stop());
-                        showToast('✅ Camera access granted!');
-                        resolve(true);
-                    } catch (e) {
-                        showToast('⚠️ Camera permission denied: ' + e.message);
-                        resolve(false);
                     }
-                } else {
-                    showToast('✅ Media Storage & Gallery access granted!');
-                    resolve(true);
+                    localStorage.setItem('agri_camera_permission', 'granted');
+                    showToast('✅ Camera access granted!');
+                } catch (e) {
+                    showToast('⚠️ Camera permission denied: ' + e.message);
                 }
-            };
-        }
+                // Call trigger callback synchronously in user action context
+                if (onAllow) onAllow();
+            } else {
+                localStorage.setItem('agri_gallery_permission', 'granted');
+                showToast('✅ Media Storage & Gallery access granted!');
+                if (onAllow) onAllow();
+            }
+        };
+    }
 
-        if (denyBtn) {
-            denyBtn.onclick = () => {
-                cleanup();
-                showToast('⚠️ Permission denied. You can grant access anytime.');
-                resolve(false);
-            };
-        }
-    });
+    if (denyBtn) {
+        denyBtn.onclick = () => {
+            cleanup();
+            showToast('⚠️ Permission denied. You can grant access anytime.');
+        };
+    }
 }
 
 function initScanner() {
@@ -1134,10 +1179,16 @@ function initScanner() {
 
     if (!dropzone) return;
 
-    // Direct click on dropzone triggers file picker synchronously
+    // Direct click on dropzone triggers file picker synchronously or opens permission first
     dropzone.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
-        if (fileInput) fileInput.click();
+        if (localStorage.getItem('agri_gallery_permission') === 'granted') {
+            if (fileInput) fileInput.click();
+        } else {
+            requestDevicePermission('gallery', () => {
+                if (fileInput) fileInput.click();
+            });
+        }
     });
 
     dropzone.addEventListener('dragover', (e) => {
@@ -1176,11 +1227,17 @@ function initScanner() {
         });
     }
 
-    // "Access Gallery & Upload" Button click - Synchronous File Picker
+    // "Access Gallery & Upload" Button click
     if (uploadMediaBtn) {
         uploadMediaBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (fileInput) fileInput.click();
+            if (localStorage.getItem('agri_gallery_permission') === 'granted') {
+                if (fileInput) fileInput.click();
+            } else {
+                requestDevicePermission('gallery', () => {
+                    if (fileInput) fileInput.click();
+                });
+            }
         });
     }
 
@@ -1192,11 +1249,8 @@ function initScanner() {
         });
     }
 
-    // "Take Photo & Auto-Diagnose" Button click
-    const openCamera = async (e) => {
-        if (e) e.stopPropagation();
-        
-        // On mobile devices, use native camera capture input for maximum resolution & ease
+    // Opens the camera synchronously
+    const openCameraDirect = () => {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         if (isMobile && cameraInput) {
             cameraInput.click();
@@ -1204,23 +1258,43 @@ function initScanner() {
         }
 
         // On desktop/laptops with WebCam, launch WebCam Stream Modal
-        try {
-            currentCameraStream = await navigator.mediaDevices.getUserMedia({ 
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ 
                 video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
+            }).then(stream => {
+                currentCameraStream = stream;
+                if (cameraModal && cameraVideo) {
+                    cameraVideo.srcObject = currentCameraStream;
+                    cameraModal.style.display = 'flex';
+                }
+            }).catch(err => {
+                // Fallback to native file/camera picker if WebCam API fails
+                if (cameraInput) {
+                    cameraInput.click();
+                } else if (fileInput) {
+                    fileInput.click();
+                } else {
+                    showToast('⚠️ Camera unavailable. Please select a photo from your gallery.');
+                }
             });
-            if (cameraModal && cameraVideo) {
-                cameraVideo.srcObject = currentCameraStream;
-                cameraModal.style.display = 'flex';
-            }
-        } catch (err) {
-            // Fallback to native file/camera picker if WebCam API fails or is denied
+        } else {
             if (cameraInput) {
                 cameraInput.click();
             } else if (fileInput) {
                 fileInput.click();
-            } else {
-                showToast('⚠️ Camera unavailable. Please select a photo from your gallery.');
             }
+        }
+    };
+
+    // "Take Photo & Auto-Diagnose" Button click
+    const openCamera = (e) => {
+        if (e) e.stopPropagation();
+        if (localStorage.getItem('agri_camera_permission') === 'granted') {
+            openCameraDirect();
+        } else {
+            requestDevicePermission('camera', () => {
+                openCameraDirect();
+            });
         }
     };
 
@@ -2524,16 +2598,23 @@ function openScanCamera() {
     // Close the FAB menu
     if (scanFabOpen) toggleScanFab();
 
-    // On mobile: use the native camera capture input
-    const cameraInput = document.getElementById('scanCameraInput');
-    if (cameraInput) {
-        cameraInput.value = '';
-        cameraInput.onchange = (e) => {
-            if (e.target.files && e.target.files[0]) {
-                handleScanFabFile(e.target.files[0]);
-            }
-        };
-        cameraInput.click();
+    const triggerCamera = () => {
+        const cameraInput = document.getElementById('scanCameraInput');
+        if (cameraInput) {
+            cameraInput.value = '';
+            cameraInput.onchange = (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    handleScanFabFile(e.target.files[0]);
+                }
+            };
+            cameraInput.click();
+        }
+    };
+
+    if (localStorage.getItem('agri_camera_permission') === 'granted') {
+        triggerCamera();
+    } else {
+        requestDevicePermission('camera', triggerCamera);
     }
 }
 
@@ -2541,16 +2622,23 @@ function openScanGallery() {
     // Close the FAB menu
     if (scanFabOpen) toggleScanFab();
 
-    // Open gallery file picker
-    const galleryInput = document.getElementById('scanGalleryInput');
-    if (galleryInput) {
-        galleryInput.value = '';
-        galleryInput.onchange = (e) => {
-            if (e.target.files && e.target.files[0]) {
-                handleScanFabFile(e.target.files[0]);
-            }
-        };
-        galleryInput.click();
+    const triggerGallery = () => {
+        const galleryInput = document.getElementById('scanGalleryInput');
+        if (galleryInput) {
+            galleryInput.value = '';
+            galleryInput.onchange = (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    handleScanFabFile(e.target.files[0]);
+                }
+            };
+            galleryInput.click();
+        }
+    };
+
+    if (localStorage.getItem('agri_gallery_permission') === 'granted') {
+        triggerGallery();
+    } else {
+        requestDevicePermission('gallery', triggerGallery);
     }
 }
 

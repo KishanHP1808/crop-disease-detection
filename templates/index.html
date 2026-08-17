@@ -162,27 +162,33 @@
                     <span>🌐</span>
                     <span>English</span>
                 </button>
-                <button onclick="selectPortalLanguage('kn')" class="btn lang-modal-card" style="border-color: #FF8F00; background: rgba(255,143,0,0.08); color: #e65100;">
+                <button onclick="selectPortalLanguage('kn')" class="btn lang-modal-card"
+                    style="border-color: #FF8F00; background: rgba(255,143,0,0.08); color: #e65100;">
                     <span>💛</span>
                     <span>ಕನ್ನಡ (Kannada)</span>
                 </button>
-                <button onclick="selectPortalLanguage('hi')" class="btn lang-modal-card" style="border-color: #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
+                <button onclick="selectPortalLanguage('hi')" class="btn lang-modal-card"
+                    style="border-color: #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
                     <span>🇮🇳</span>
                     <span>हिंदी (Hindi)</span>
                 </button>
-                <button onclick="selectPortalLanguage('ta')" class="btn lang-modal-card" style="border-color: #c62828; background: rgba(198,40,40,0.08); color: #b71c1c;">
+                <button onclick="selectPortalLanguage('ta')" class="btn lang-modal-card"
+                    style="border-color: #c62828; background: rgba(198,40,40,0.08); color: #b71c1c;">
                     <span>🌺</span>
                     <span>தமிழ் (Tamil)</span>
                 </button>
-                <button onclick="selectPortalLanguage('te')" class="btn lang-modal-card" style="border-color: #1565C0; background: rgba(21,101,192,0.08); color: #0d47a1;">
+                <button onclick="selectPortalLanguage('te')" class="btn lang-modal-card"
+                    style="border-color: #1565C0; background: rgba(21,101,192,0.08); color: #0d47a1;">
                     <span>🌼</span>
                     <span>తెలుగు (Telugu)</span>
                 </button>
-                <button onclick="selectPortalLanguage('ml')" class="btn lang-modal-card" style="border-color: #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
+                <button onclick="selectPortalLanguage('ml')" class="btn lang-modal-card"
+                    style="border-color: #2E7D32; background: rgba(46,125,50,0.08); color: #1b5e20;">
                     <span>🌴</span>
                     <span>മലയാളം (Malayalam)</span>
                 </button>
-                <button onclick="selectPortalLanguage('mr')" class="btn lang-modal-card" style="border-color: #e65100; background: rgba(230,81,0,0.08); color: #e65100;">
+                <button onclick="selectPortalLanguage('mr')" class="btn lang-modal-card"
+                    style="border-color: #e65100; background: rgba(230,81,0,0.08); color: #e65100;">
                     <span>🌾</span>
                     <span>मराठी (Marathi)</span>
                 </button>
@@ -490,7 +496,7 @@
                                     <option value="Green Gram">Green Gram / Moong (Rajasthan, Maharashtra)</option>
                                     <option value="Black Gram">Black Gram / Urad (MP, UP, AP)</option>
                                     <option value="Lentil">Lentil (MP, UP, Bihar)</option>
-                                    <option value="Rajma">Rajma (J&K, HP, Uttarakhand)</option>
+                                    <option value="Rajma">Rajma (J&K, HP, Uttarakhand,Karnataka)</option>
                                 </optgroup>
 
                                 <optgroup label="🥜 Oilseeds">
@@ -1297,33 +1303,45 @@
             </div>
         </div>
 
-        <div style="padding:12px; border-top:1px solid var(--border-color); display:flex; gap:8px; background:var(--card-bg-light);">
-            <button id="voiceInputBtn" style="background:none; border:none; font-size:1.3rem; cursor:pointer;" title="Voice Input">🎙️</button>
-            <input type="text" id="chatInput" class="form-control" placeholder="Ask disease solutions, dosages, treatments..." style="flex:1;">
+        <div
+            style="padding:12px; border-top:1px solid var(--border-color); display:flex; gap:8px; background:var(--card-bg-light);">
+            <button id="voiceInputBtn" style="background:none; border:none; font-size:1.3rem; cursor:pointer;"
+                title="Voice Input">🎙️</button>
+            <input type="text" id="chatInput" class="form-control"
+                placeholder="Ask disease solutions, dosages, treatments..." style="flex:1;">
             <button id="sendChatBtn" class="btn btn-primary" style="padding:8px 16px;">Send</button>
         </div>
     </div>
 
     <!-- Live Camera Scanner Modal -->
-    <div id="cameraModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); z-index:10002; align-items:center; justify-content:center; padding:20px;">
-        <div class="glass-card" style="width:100%; max-width:560px; padding:24px; text-align:center; position:relative; background:var(--card-bg-light);">
+    <div id="cameraModal"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); z-index:10002; align-items:center; justify-content:center; padding:20px;">
+        <div class="glass-card"
+            style="width:100%; max-width:560px; padding:24px; text-align:center; position:relative; background:var(--card-bg-light);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                 <h3 style="color:var(--primary); margin:0;">📷 Live AI Crop &amp; Disease Scanner</h3>
-                <button id="closeCameraModal" style="background:none; border:none; font-size:1.5rem; color:var(--text-dark); cursor:pointer;">✕</button>
+                <button id="closeCameraModal"
+                    style="background:none; border:none; font-size:1.5rem; color:var(--text-dark); cursor:pointer;">✕</button>
             </div>
 
-            <div style="position:relative; width:100%; border-radius:16px; overflow:hidden; border:3px solid var(--primary); background:#000;">
-                <video id="cameraVideo" autoplay playsinline style="width:100%; height:320px; object-fit:cover; display:block;"></video>
+            <div
+                style="position:relative; width:100%; border-radius:16px; overflow:hidden; border:3px solid var(--primary); background:#000;">
+                <video id="cameraVideo" autoplay playsinline
+                    style="width:100%; height:320px; object-fit:cover; display:block;"></video>
                 <!-- Reticle Overlay -->
-                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:220px; height:220px; border:3px dashed var(--accent); border-radius:24px; box-shadow:0 0 0 1000px rgba(0,0,0,0.35); pointer-events:none; display:flex; align-items:center; justify-content:center;">
-                    <span style="background:rgba(0,0,0,0.7); color:white; padding:6px 14px; border-radius:12px; font-size:0.85rem; font-weight:700;">Center Crop Leaf Here</span>
+                <div
+                    style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:220px; height:220px; border:3px dashed var(--accent); border-radius:24px; box-shadow:0 0 0 1000px rgba(0,0,0,0.35); pointer-events:none; display:flex; align-items:center; justify-content:center;">
+                    <span
+                        style="background:rgba(0,0,0,0.7); color:white; padding:6px 14px; border-radius:12px; font-size:0.85rem; font-weight:700;">Center
+                        Crop Leaf Here</span>
                 </div>
             </div>
 
             <canvas id="cameraCanvas" style="display:none;"></canvas>
 
             <div style="display:flex; gap:12px; margin-top:20px;">
-                <button class="btn btn-accent" id="snapAndDetectBtn" style="flex:1; padding:14px; font-size:1.05rem;">📸 Snap Photo &amp; Instantly Detect</button>
+                <button class="btn btn-accent" id="snapAndDetectBtn" style="flex:1; padding:14px; font-size:1.05rem;">📸
+                    Snap Photo &amp; Instantly Detect</button>
                 <button class="btn btn-secondary" id="closeCameraModalBtn">Close</button>
             </div>
         </div>
@@ -1332,26 +1350,40 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- APK / PWA Install Guide Modal                                     -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div id="installGuideModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); align-items:center; justify-content:center;">
-        <div style="background:var(--surface); border-radius:24px; padding:32px; max-width:480px; width:92%; max-height:85vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,0.35); position:relative;">
-            <button onclick="document.getElementById('installGuideModal').style.display='none'" style="position:absolute; top:16px; right:16px; background:var(--border); border:none; border-radius:50%; width:36px; height:36px; font-size:1.1rem; cursor:pointer; color:var(--text-dark);">✕</button>
+    <div id="installGuideModal"
+        style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); align-items:center; justify-content:center;">
+        <div
+            style="background:var(--surface); border-radius:24px; padding:32px; max-width:480px; width:92%; max-height:85vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,0.35); position:relative;">
+            <button onclick="document.getElementById('installGuideModal').style.display='none'"
+                style="position:absolute; top:16px; right:16px; background:var(--border); border:none; border-radius:50%; width:36px; height:36px; font-size:1.1rem; cursor:pointer; color:var(--text-dark);">✕</button>
             <div style="text-align:center; margin-bottom:24px;">
                 <div style="font-size:3rem; margin-bottom:8px;">📲</div>
-                <h2 style="font-size:1.4rem; font-weight:900; color:var(--primary); margin:0 0 6px 0;">Install AgriGuard AI</h2>
-                <p style="color:var(--text-muted-light); font-size:0.9rem; margin:0;">Install the app on your phone for the best farming experience — works offline too!</p>
+                <h2 style="font-size:1.4rem; font-weight:900; color:var(--primary); margin:0 0 6px 0;">Install AgriGuard
+                    AI</h2>
+                <p style="color:var(--text-muted-light); font-size:0.9rem; margin:0;">Install the app on your phone for
+                    the best farming experience — works offline too!</p>
             </div>
 
             <!-- Step-by-step guide tabs -->
-            <div style="display:flex; gap:8px; margin-bottom:20px; background:var(--bg); border-radius:14px; padding:4px;">
-                <button onclick="showInstallTab('android')" id="androidTab" style="flex:1; padding:10px; border-radius:10px; border:none; background:var(--primary); color:#fff; font-weight:800; font-size:0.88rem; cursor:pointer;">🤖 Android</button>
-                <button onclick="showInstallTab('pwa')" id="pwaTab" style="flex:1; padding:10px; border-radius:10px; border:none; background:transparent; color:var(--text-muted-light); font-weight:700; font-size:0.88rem; cursor:pointer;">🌐 Browser (PWA)</button>
-                <button onclick="showInstallTab('ios')" id="iosTab" style="flex:1; padding:10px; border-radius:10px; border:none; background:transparent; color:var(--text-muted-light); font-weight:700; font-size:0.88rem; cursor:pointer;">🍎 iOS</button>
+            <div
+                style="display:flex; gap:8px; margin-bottom:20px; background:var(--bg); border-radius:14px; padding:4px;">
+                <button onclick="showInstallTab('android')" id="androidTab"
+                    style="flex:1; padding:10px; border-radius:10px; border:none; background:var(--primary); color:#fff; font-weight:800; font-size:0.88rem; cursor:pointer;">🤖
+                    Android</button>
+                <button onclick="showInstallTab('pwa')" id="pwaTab"
+                    style="flex:1; padding:10px; border-radius:10px; border:none; background:transparent; color:var(--text-muted-light); font-weight:700; font-size:0.88rem; cursor:pointer;">🌐
+                    Browser (PWA)</button>
+                <button onclick="showInstallTab('ios')" id="iosTab"
+                    style="flex:1; padding:10px; border-radius:10px; border:none; background:transparent; color:var(--text-muted-light); font-weight:700; font-size:0.88rem; cursor:pointer;">🍎
+                    iOS</button>
             </div>
 
             <!-- Android APK Guide -->
             <div id="installTab-android">
-                <div style="background: linear-gradient(135deg,#e8f5e9,#f1f8e9); border-radius:16px; padding:20px; margin-bottom:16px;">
-                    <div style="font-weight:800; color:#1b5e20; margin-bottom:14px; font-size:0.95rem;">📋 Steps to Install Android APK:</div>
+                <div
+                    style="background: linear-gradient(135deg,#e8f5e9,#f1f8e9); border-radius:16px; padding:20px; margin-bottom:16px;">
+                    <div style="font-weight:800; color:#1b5e20; margin-bottom:14px; font-size:0.95rem;">📋 Steps to
+                        Install Android APK:</div>
                     <ol style="padding-left:20px; color:var(--text-dark); font-size:0.9rem; line-height:1.9; margin:0;">
                         <li>Tap <strong>"Download APK"</strong> button below</li>
                         <li>Go to your phone's <strong>Downloads folder</strong></li>
@@ -1361,19 +1393,25 @@
                         <li>Open <strong>AgriGuard AI</strong> from your home screen! 🎉</li>
                     </ol>
                 </div>
-                <div style="background:#fff3e0; border-radius:12px; padding:12px 16px; font-size:0.82rem; color:#e65100; font-weight:600; margin-bottom:16px;">
-                    ⚠️ <strong>Note:</strong> You may need to enable "Install unknown apps" in Android Settings → Security. This is safe — AgriGuard AI is a trusted farming app.
+                <div
+                    style="background:#fff3e0; border-radius:12px; padding:12px 16px; font-size:0.82rem; color:#e65100; font-weight:600; margin-bottom:16px;">
+                    ⚠️ <strong>Note:</strong> You may need to enable "Install unknown apps" in Android Settings →
+                    Security. This is safe — AgriGuard AI is a trusted farming app.
                 </div>
-                <a href="/download/apk/" download="AgriGuard-AI-v2.4.apk" style="display:block; text-align:center; background:linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; padding:16px; border-radius:16px; font-weight:900; font-size:1rem; text-decoration:none; box-shadow:0 6px 20px rgba(46,125,50,0.4);">
+                <a href="/download/apk/" download="AgriGuard-AI-v2.4.apk"
+                    style="display:block; text-align:center; background:linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; padding:16px; border-radius:16px; font-weight:900; font-size:1rem; text-decoration:none; box-shadow:0 6px 20px rgba(46,125,50,0.4);">
                     ⬇️ Download AgriGuard AI APK (Android)
                 </a>
-                <div style="text-align:center; margin-top:10px; font-size:0.78rem; color:var(--text-muted-light);">v2.4 · Free · No subscription needed</div>
+                <div style="text-align:center; margin-top:10px; font-size:0.78rem; color:var(--text-muted-light);">v2.4
+                    · Free · No subscription needed</div>
             </div>
 
             <!-- PWA Browser Guide -->
             <div id="installTab-pwa" style="display:none;">
-                <div style="background: linear-gradient(135deg,#e3f2fd,#e8f5e9); border-radius:16px; padding:20px; margin-bottom:16px;">
-                    <div style="font-weight:800; color:#1565c0; margin-bottom:14px; font-size:0.95rem;">🌐 Install via Browser (Chrome / Edge):</div>
+                <div
+                    style="background: linear-gradient(135deg,#e3f2fd,#e8f5e9); border-radius:16px; padding:20px; margin-bottom:16px;">
+                    <div style="font-weight:800; color:#1565c0; margin-bottom:14px; font-size:0.95rem;">🌐 Install via
+                        Browser (Chrome / Edge):</div>
                     <ol style="padding-left:20px; color:var(--text-dark); font-size:0.9rem; line-height:1.9; margin:0;">
                         <li>Open <strong>AgriGuard AI</strong> in Chrome browser</li>
                         <li>Look for the <strong>"Install" icon</strong> (➕) in the address bar</li>
@@ -1382,18 +1420,23 @@
                         <li>The app will appear on your home screen like a native app! 🎉</li>
                     </ol>
                 </div>
-                <button id="pwaInstallBtnModal" onclick="triggerPwaInstall()" style="display:none; width:100%; background:linear-gradient(135deg,#1565c0,#1976d2); color:#fff; border:none; padding:16px; border-radius:16px; font-weight:900; font-size:1rem; cursor:pointer; box-shadow:0 6px 20px rgba(21,101,192,0.4);">
+                <button id="pwaInstallBtnModal" onclick="triggerPwaInstall()"
+                    style="display:none; width:100%; background:linear-gradient(135deg,#1565c0,#1976d2); color:#fff; border:none; padding:16px; border-radius:16px; font-weight:900; font-size:1rem; cursor:pointer; box-shadow:0 6px 20px rgba(21,101,192,0.4);">
                     📱 Install App Now (PWA)
                 </button>
-                <div id="pwaNoteBox" style="background:#e3f2fd; border-radius:12px; padding:12px 16px; font-size:0.85rem; color:#1565c0; font-weight:600; text-align:center;">
-                    Open this page in <strong>Chrome</strong> or <strong>Edge</strong> to see the Install button automatically.
+                <div id="pwaNoteBox"
+                    style="background:#e3f2fd; border-radius:12px; padding:12px 16px; font-size:0.85rem; color:#1565c0; font-weight:600; text-align:center;">
+                    Open this page in <strong>Chrome</strong> or <strong>Edge</strong> to see the Install button
+                    automatically.
                 </div>
             </div>
 
             <!-- iOS Guide -->
             <div id="installTab-ios" style="display:none;">
-                <div style="background: linear-gradient(135deg,#fce4ec,#fff3e0); border-radius:16px; padding:20px; margin-bottom:16px;">
-                    <div style="font-weight:800; color:#880e4f; margin-bottom:14px; font-size:0.95rem;">🍎 Install on iPhone / iPad (iOS Safari):</div>
+                <div
+                    style="background: linear-gradient(135deg,#fce4ec,#fff3e0); border-radius:16px; padding:20px; margin-bottom:16px;">
+                    <div style="font-weight:800; color:#880e4f; margin-bottom:14px; font-size:0.95rem;">🍎 Install on
+                        iPhone / iPad (iOS Safari):</div>
                     <ol style="padding-left:20px; color:var(--text-dark); font-size:0.9rem; line-height:1.9; margin:0;">
                         <li>Open <strong>AgriGuard AI</strong> in <strong>Safari</strong> browser</li>
                         <li>Tap the <strong>Share button</strong> (□ with ↑ arrow) at the bottom</li>
@@ -1402,8 +1445,10 @@
                         <li>Open <strong>AgriGuard AI</strong> from your home screen! 🎉</li>
                     </ol>
                 </div>
-                <div style="background:#fce4ec; border-radius:12px; padding:12px 16px; font-size:0.82rem; color:#880e4f; font-weight:600;">
-                    ℹ️ iOS does not support APK downloads. Use the "Add to Home Screen" method via Safari for the best app-like experience.
+                <div
+                    style="background:#fce4ec; border-radius:12px; padding:12px 16px; font-size:0.82rem; color:#880e4f; font-weight:600;">
+                    ℹ️ iOS does not support APK downloads. Use the "Add to Home Screen" method via Safari for the best
+                    app-like experience.
                 </div>
             </div>
         </div>
@@ -1415,11 +1460,17 @@
             <div class="footer-grid">
                 <div>
                     <div class="footer-logo">🌿 AgriGuard <span>AI</span></div>
-                    <p style="color:#a0aec0; font-size:0.95rem;">Empowering smallholder &amp; commercial farmers with modern AI diagnostics and precision farming tools.</p>
+                    <p style="color:#a0aec0; font-size:0.95rem;">Empowering smallholder &amp; commercial farmers with
+                        modern AI diagnostics and precision farming tools.</p>
                     <!-- Download App Pill in footer -->
                     <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
-                        <a href="/download/apk/" download="AgriGuard-AI-v2.4.apk" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; padding:10px 16px; border-radius:12px; font-size:0.82rem; font-weight:800; text-decoration:none; box-shadow:0 4px 12px rgba(46,125,50,0.35);">🤖 Download APK <span style="background:#ff6f00; padding:1px 6px; border-radius:6px; font-size:0.7rem;">Android</span></a>
-                        <button onclick="showInstallGuideModal()" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); color:#a0aec0; border:1.5px solid rgba(255,255,255,0.15); padding:10px 14px; border-radius:12px; font-size:0.82rem; font-weight:700; cursor:pointer;">📲 Install Guide</button>
+                        <a href="/download/apk/" download="AgriGuard-AI-v2.4.apk"
+                            style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; padding:10px 16px; border-radius:12px; font-size:0.82rem; font-weight:800; text-decoration:none; box-shadow:0 4px 12px rgba(46,125,50,0.35);">🤖
+                            Download APK <span
+                                style="background:#ff6f00; padding:1px 6px; border-radius:6px; font-size:0.7rem;">Android</span></a>
+                        <button onclick="showInstallGuideModal()"
+                            style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); color:#a0aec0; border:1.5px solid rgba(255,255,255,0.15); padding:10px 14px; border-radius:12px; font-size:0.82rem; font-weight:700; cursor:pointer;">📲
+                            Install Guide</button>
                     </div>
                 </div>
                 <div>
@@ -1441,11 +1492,13 @@
                 </div>
                 <div>
                     <h4 class="footer-title">Contact</h4>
-                    <p style="color:#a0aec0; font-size:0.9rem;">Email: support@agriguard.ai<br>Toll-Free Kisan Helpline: 1800-180-1551</p>
+                    <p style="color:#a0aec0; font-size:0.9rem;">Email: support@agriguard.ai<br>Toll-Free Kisan Helpline:
+                        1800-180-1551</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2026 AgriGuard AI Smart Farming Platform. Production-Ready Agriculture Solution. All rights reserved.
+                &copy; 2026 AgriGuard AI Smart Farming Platform. Production-Ready Agriculture Solution. All rights
+                reserved.
             </div>
         </div>
     </footer>

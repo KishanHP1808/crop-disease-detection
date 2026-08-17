@@ -645,6 +645,51 @@ async function reverseGeocodeCoordinates(lat, lng) {
     }
 }
 
+function getRegionalSoilType(lat, lng, locName) {
+    const latNum = parseFloat(lat);
+    const lngNum = parseFloat(lng);
+    const locLower = (locName || '').toLowerCase();
+
+    // Check international locations first
+    if (locLower.includes('usa') || locLower.includes('united states') || (lngNum > -125 && lngNum < -65 && latNum > 24 && latNum < 49)) {
+        return 'Mollisols / Prairie Loam (Fertile Organic Soil)';
+    }
+    if (locLower.includes('nepal') || locLower.includes('kathmandu') || (lngNum > 80 && lngNum < 89 && latNum > 26 && latNum < 31)) {
+        return 'Mountainous Forest Soil';
+    }
+    if (locLower.includes('bangladesh') || (lngNum > 88 && lngNum < 93 && latNum > 20 && latNum < 27)) {
+        return 'Ganges Deltaic Silt Loam';
+    }
+    if (locLower.includes('sri lanka') || (lngNum > 79 && lngNum < 82 && latNum > 5 && latNum < 10)) {
+        return 'Reddish Brown Coastal Earth';
+    }
+    if (locLower.includes('australia') || (lngNum > 113 && lngNum < 154 && latNum > -44 && latNum < -10)) {
+        return 'Aridisols / Red Desert Soil';
+    }
+    if (locLower.includes('uk') || locLower.includes('united kingdom') || locLower.includes('europe') || (lngNum > -10 && lngNum < 30 && latNum > 35 && latNum < 65)) {
+        return 'Alfisols / Brown Forest Clay-Loam';
+    }
+
+    // India specific regional soils
+    if (locLower.includes('punjab') || locLower.includes('haryana') || locLower.includes('uttar pradesh') || locLower.includes('bihar') || locLower.includes('bengal') || locLower.includes('delhi') || locLower.includes('ganga') || locLower.includes('up')) {
+        return 'Alluvial Fertile Loam';
+    }
+    if (locLower.includes('rajasthan') || locLower.includes('thar') || locLower.includes('kutch') || locLower.includes('desert') || (lngNum > 68 && lngNum < 75 && latNum > 22 && latNum < 30)) {
+        return 'Desert Arid Sand';
+    }
+    if (locLower.includes('maharashtra') || locLower.includes('gujarat') || locLower.includes('madhya pradesh') || locLower.includes('mp') || locLower.includes('deccan') || (lngNum > 72 && lngNum < 81 && latNum > 15 && latNum < 24)) {
+        return 'Black Cotton Soil (Vertisol)';
+    }
+    if (locLower.includes('kerala') || locLower.includes('goa') || locLower.includes('coastal') || locLower.includes('konkan') || (lngNum > 72 && lngNum < 78 && latNum > 8 && latNum < 15)) {
+        return 'Coastal Laterite Soil';
+    }
+    if (locLower.includes('kashmir') || locLower.includes('ladakh') || locLower.includes('himachal') || locLower.includes('uttarakhand') || latNum > 31.0) {
+        return 'Mountain Peaty Soil';
+    }
+
+    return 'Red Sandy Loam';
+}
+
 async function fetchAndDisplayEntranceEnvironment(lat, lng, overrideLocName = null) {
     try {
         const res = await fetch(`/api/v1/weather/?lat=${lat}&lng=${lng}`);
@@ -662,10 +707,7 @@ async function fetchAndDisplayEntranceEnvironment(lat, lng, overrideLocName = nu
         if (coordElem) coordElem.textContent = `(${parseFloat(lat).toFixed(4)}° N, ${parseFloat(lng).toFixed(4)}° E)`;
         if (weatherElem) weatherElem.innerHTML = `🌡️ ${data.temp_c}°C &nbsp;|&nbsp; 💧 Humidity: ${data.humidity}% &nbsp;|&nbsp; 🌧️ Rain: ${data.rainfall_mm}mm`;
 
-        let soilType = 'Black Cotton Soil (Vertisol)';
-        if (parseFloat(lat) > 20.0) soilType = 'Alluvial Fertile Loam';
-        else if (parseFloat(lat) < 10.5) soilType = 'Coastal Laterite Soil';
-        else if (parseFloat(lng) > 80.0) soilType = 'Red Sandy Loam';
+        let soilType = getRegionalSoilType(lat, lng, locName);
 
         localStorage.setItem('agriguard_soil_type', soilType);
         if (soilElem) soilElem.innerHTML = `🪨 Soil: ${soilType}`;
